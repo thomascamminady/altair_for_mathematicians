@@ -23,3 +23,9 @@ test:
 
 coverage:
 	pytest --cov=altair_for_mathematicians tests/
+
+
+book:
+	poetry run jupyter-book clean altair_for_mathematicians
+	poetry run jupyter-book build altair_for_mathematicians
+	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome file:///Users/thomascamminady/Playground/altair_for_mathematicians/altair_for_mathematicians/_build/html/index.html
