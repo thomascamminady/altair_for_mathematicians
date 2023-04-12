@@ -41,24 +41,22 @@ To use `altair`, we need to convert this matrix into a dataframe that looks slig
 Instead of storing the columns of the matrix as columns of the dataframe, we convert the matrix
 into a *long* dataframe like this.
 ```{python}
-i, j = np.indices(Z.shape)
-delta = x[1] - x[0]
 df = pd.DataFrame(
     {
-        "i": i.flatten(),
         "y": Y.flatten(),
-        "j": j.flatten(),
         "x": X.flatten(),
         "z": Z.flatten(),
     }
 )
-df.head(10)
-
 ```
-
-Now we can visualize the data using `altair`.
+Here are the first ten rows of the dataframe.
+```{python}
+df.head(10)
+```
+Now we can visualize the data using `altair`. However, we need to compute `x2` and `y2` to tell `altair` the extend of every rectangle. We can use `transform_calculate` for that.
 
 ```{python}
+delta = x[1] - x[0]
 alt.Chart(df).mark_rect(clip=True).encode(
     x=alt.X("x", scale=alt.Scale(domain=(0, 5)), title="x"),
     x2=alt.X2("x2"),
@@ -69,4 +67,52 @@ alt.Chart(df).mark_rect(clip=True).encode(
     x2=alt.datum.x + delta,
     y2=alt.datum.y + delta,
 )
+```
+
+Now let's say that our data also had a time component.
+```{python}
+x = np.linspace(0, 5, 20)
+t = np.linspace(0, 3, 10)
+X, Y, T = np.meshgrid(x, x, t)
+Z = np.sin(2 * X + T) + np.sqrt(Y)
+
+df = pd.DataFrame(
+    {
+        "t": T.flatten(),
+        "y": Y.flatten(),
+        "x": X.flatten(),
+        "z": Z.flatten(),
+    }
+)
+```
+
+In addition to visualizing the heatmap, we can display the evolution of each cell over time.
+
+```{python}
+
+selection = alt.selection_point(fields=["x", "y"])
+delta = x[1] - x[0]
+base = (
+    alt.Chart(df)
+    .encode(opacity=alt.condition(selection, alt.value(1.0), alt.value(0.2)))
+    .add_params(selection)
+)
+heatmap = (
+    base.mark_rect(clip=True)
+    .encode(
+        x=alt.X("x", scale=alt.Scale(domain=(0, 5)), title="x"),
+        x2=alt.X2("x2"),
+        y=alt.Y("y", scale=alt.Scale(domain=(0, 5)), title="y"),
+        y2=alt.Y2("y2"),
+        color=alt.Color("z:Q", scale=alt.Scale(scheme="viridis")),
+    )
+    .transform_calculate(
+        x2=alt.datum.x + delta,
+        y2=alt.datum.y + delta,
+    )
+    .transform_filter(alt.datum.t == t[-1])
+)
+linechart = base.mark_line().encode(x="t", y="z", detail=["x", "y"])
+
+heatmap | linechart
 ```
