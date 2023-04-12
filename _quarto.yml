@@ -25,16 +25,17 @@ website:
     style: "docked"
     search: true
     contents:
+      - index.qmd
       - section: "Differential equations"
         contents:
           - notebooks/1a_predator_prey_model.qmd
-          -  notebooks/1b_van_der_pol.qmd
-  navbar:
-    background: primary
-    search: true
-    left:
-      - text: "Altair for Mathematicians"
-        file: index.qmd
+          - notebooks/1b_van_der_pol.qmd
+  # navbar:
+  #   background: primary
+  #   search: true
+  #   left:
+  #     - text: "Altair for Mathematicians"
+  #       file: index.qmd
 
 format:
   html:
