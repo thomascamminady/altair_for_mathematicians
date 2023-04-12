@@ -1,0 +1,170 @@
+---
+title: Predator prey model
+jupyter: python3
+---
+
+
+
+Import statements are hidden below.
+
+```{python}
+# | slideshow: {slide_type: slide}
+# | tags: [hide-input]
+import altair as alt
+import numpy as np
+import pandas as pd
+import scipy
+
+
+```
+
+## Model
+
+Let's start with one of the simples models for dynamical systems, the predator-prey model.
+Here, the population of the prey ($x$) and the predator ($y$) follow the following differential equation:
+
+$$
+\begin{aligned}
+    \frac{dx}{dt} &= \alpha x - \beta x  y \\
+    \frac{dy}{dt} &= \delta x  y - \gamma y
+\end{aligned}
+$$
+
+The constants $\alpha$, $\beta$, $\gamma$, and $\delta$ describe the population gain and loss.
+Implementing this in code with some default parameters, we get the following two functions. Note that the second function is just a wrapper that can be used by the integrator later on.
+
+```{python}
+# | slideshow: {slide_type: subslide}
+def predator_prey_model(predator, prey):
+    alpha, beta, gamma, delta = 1.0, 0.5, 2.0, 0.6
+    return (
+        alpha * prey - beta * prey * predator,
+        delta * prey * predator - gamma * predator,
+    )
+
+
+def predator_prey_ode_wrapper(y, t):
+    return predator_prey_model(y[1], y[0])
+
+
+```
+
+## Solving the differential equation
+
+We use `scipy` to solve the differential equation over a certain time interval `t`.
+Our integrator requires an initial population of predators and prey. Here, we solve the differential
+equation four times, each time with different initial conditions. The resulting data is
+aggregated into a `pd.DataFrame` and each simulation run gets its own unique ID.
+
+```{python}
+t = np.arange(0, 5, step=0.01)
+source_list = []
+for id, y0 in enumerate([[10, 10], [5, 10], [10, 5], [5, 5]]):
+    predator_prey = scipy.integrate.odeint(predator_prey_ode_wrapper, y0=y0, t=t)
+    source_list.append(
+        pd.DataFrame(
+            {
+                "Time": t,
+                "Prey": predator_prey[:, 0],
+                "Predator": predator_prey[:, 1],
+                "ID": id,
+            }
+        )
+    )
+source = pd.concat(source_list)
+```
+
+In addition to solving the differential equation, we also want to visualize the vector field.
+In this case, the vector field tells us at every point in phase-space, what the change in population is for the predators and the prey.
+
+```{python}
+prey = np.arange(source["Prey"].max())
+predator = np.arange(source["Predator"].max())
+predator, prey = np.meshgrid(predator, prey)
+predator, prey = predator.flatten(), prey.flatten()
+dPrey, dPredator = predator_prey_model(predator, prey)
+```
+
+We also store this data inside a `pd.DataFrame`.
+
+```{python}
+# | slideshow: {slide_type: subslide}
+source_vector_field = pd.DataFrame(
+    {
+        "Predator": predator,
+        "Prey": prey,
+        "Angle": np.arctan2(dPredator, dPrey),
+        "Population Change": dPrey + dPredator,
+    }
+)
+```
+
+## Visualization
+Now we visualize the data. We will create two plots, one showing the phase-space with
+the vector field, and one showing the evolution of the populations over time.
+The phase-space diagram and the time series are using the same data so we can create
+a base chart that contains all the common content. We also add a `selection` that allows
+us to highlight different runs of our simulation later on.
+We use `detail` as a way to tell our `altair` plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.
+
+```{python}
+# selection = alt.selection_point(fields=["ID"], on="mouseover", toggle=True)
+base = (
+    alt.Chart(source)
+    .mark_line()
+    .encode(
+        detail="ID",
+        # opacity=alt.condition(selection, alt.value(1), alt.value(0.1)),
+    )
+    # .add_params(selection)
+    .properties(width=500, height=300)
+)
+```
+
+With this base chart, we create the time series and the phase-space diagram next.
+For the time series, we have to transform our wide `pd.DataFrame` into a long `pd.DataFrame` using [`transform_fold`](https://altair-viz.github.io/user_guide/transform/fold.html#user-guide-fold-transform).
+
+```{python}
+# | slideshow: {slide_type: slide}
+chart_time_series = (
+    base.transform_fold(["Predator", "Prey"], ["Species", "Population"])
+    .encode(
+        x="Time:Q",
+        y="Population:Q",
+        color="Species:N",
+    )
+    .properties(title="Time series")
+)
+chart_phase_space = base.encode(
+    x=alt.X("Predator:Q", sort=None),
+    y=alt.Y("Prey:Q"),
+    color=alt.value("black"),
+).properties(title="Phase space")
+```
+
+Next we create the vector field using the `wedge` shape. Each arrow in phase-space
+points at an angle that represents the change in the populations.
+
+```{python}
+# | slideshow: {slide_type: slide}
+chart_vector_field = (
+    alt.Chart(source_vector_field)
+    .mark_point(shape="wedge", filled=True, size=500)
+    .encode(
+        x=alt.X("Predator:Q", sort=None),
+        y=alt.Y("Prey:Q"),
+        angle=alt.Angle(
+            "Angle", scale=alt.Scale(domain=[-np.pi, np.pi], range=[-180, 180])
+        ),
+        color=alt.Color("Population Change:Q"),
+    )
+)
+```
+
+At last, we combine our plots to get the final result.
+Try to hover over some of the lines and you will see the runs of our simulations being highlighted in both charts.
+
+```{python}
+# | slideshow: {slide_type: slide}
+chart_time_series & chart_vector_field + chart_phase_space
+```

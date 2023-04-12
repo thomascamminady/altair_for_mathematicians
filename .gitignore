@@ -160,3 +160,7 @@ cython_debug/
 *.pyc
 .venv/
 logs/
+
+/.quarto/
+
+/.luarc.json

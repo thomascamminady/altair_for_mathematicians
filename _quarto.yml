@@ -1,0 +1,51 @@
+project:
+  type: website
+  output-dir: .output
+
+book:
+  title: "Altair for Mathematicians"
+  author: "Thomas Camminady"
+  # favicon: polar-bear-airpods-no-background.png
+  description: How to use Altair as a Mathematician.
+  # keyword: polars, pandas, python, dataframe, performance, data science, data engineering
+  # url: https://kevinheavey.github.io/modern-polars/
+  sidebar:
+    background: "#F5F5F5"
+    # logo: polar-bear-airpods-no-background.png
+    search: true
+  # repo-url: https://github.com/kevinheavey/modern-polars/
+  # repo-subdir: book
+  repo-branch: main
+  repo-actions: [edit, issue, source]
+  sharing: [twitter, facebook, linkedin]
+  # image: polar-bear-airpods-no-background.png
+  # comments:
+    # giscus:
+      # repo: kevinheavey/modern-polars
+  # open-graph:
+    # image: https://github.com/kevinheavey/modern-polars/raw/master/book/resized-og-polar-bear-airpods-no-background.png
+    # description: A side-by-side comparison of the Polars and Pandas libraries.
+
+
+website:
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Differential equations"
+        contents:
+          - notebooks/1a_predator_prey_model.qmd
+          -  notebooks/1b_van_der_pol.qmd
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Altair for Mathematicians"
+        file: index.qmd
+
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    theme: default
+    toc: true
