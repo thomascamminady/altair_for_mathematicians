@@ -14,6 +14,10 @@ website:
     search: true
     contents:
       - index.qmd
+      - section: "Simple graphs"
+        contents:
+          - notebooks/linecharts.qmd
+          - notebooks/scatter.qmd
       - section: "Matrices"
         contents:
           - notebooks/matrices.qmd

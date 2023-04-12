@@ -1,0 +1,58 @@
+# Scatter plots and logarithmic scales
+
+In this chapter, we will dive deeper into the world of Altair visualizations by creating scatter plots with logarithmic scales. Scatter plots are an excellent way to visualize the relationship between two variables and can reveal patterns that might be difficult to discern from raw data alone. We will use a dataset that showcases the relationship between two variables, and we will create a visually appealing and interactive scatter plot using Altair. Along the way, we will explore different color schemes and logarithmic scales to enhance our visualization.
+
+## Creating Example Data
+
+For this example, let's consider a dataset representing the population and GDP of several countries. The dataset consists of three columns: country name, population, and GDP. Our goal is to create a scatter plot that shows the relationship between population and GDP.
+
+```{python}
+import pandas as pd
+
+data = pd.DataFrame(
+    {
+        "country": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+        "population": [12, 65, 28, 130, 47, 76, 18, 88, 58, 110],
+        "GDP": [0.6, 2.8, 1.4, 5.5, 2.2, 3.8, 0.9, 4.5, 3.0, 4.7],
+    }
+)
+```
+Basic Scatter Plot with Altair
+
+Let's start by creating a basic scatter plot with Altair to visualize the relationship between population and GDP.
+
+```{python}
+import altair as alt
+
+scatter_plot = (
+    alt.Chart(data)
+    .mark_circle()
+    .encode(x="population", y="GDP", tooltip=["country", "population", "GDP"])
+    .properties(title="Scatter Plot: Population vs. GDP")
+)
+
+scatter_plot
+```
+This scatter plot provides a basic overview of the relationship between population and GDP. However, we can enhance this visualization further by using logarithmic scales and different color schemes.
+
+Scatter Plot with Logarithmic Scales
+
+In many cases, data can span several orders of magnitude, making it difficult to discern patterns in a linear scale. By using logarithmic scales, we can more easily visualize relationships between variables that have a wide range of values.
+
+```{python}
+scatter_plot_log = (
+    alt.Chart(data)
+    .mark_circle()
+    .encode(
+        x=alt.X(
+            "population", scale=alt.Scale(type="log"), title="Population (Log Scale)"
+        ),
+        y=alt.Y("GDP", scale=alt.Scale(type="log"), title="GDP (Log Scale)"),
+        tooltip=["country", "population", "GDP"],
+    )
+    .properties(title="Scatter Plot: Population vs. GDP (Logarithmic Scales)")
+)
+
+scatter_plot_log
+```
+By using logarithmic scales for both the x and y axes, we can more clearly see the relationship between population and GDP, even when the values span multiple orders of magnitude.

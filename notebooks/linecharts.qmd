@@ -1,0 +1,77 @@
+---
+title: Plotting functions
+jupyter: python3
+execute:
+  enabled: true
+---
+
+In this chapter, we will learn how to create beautiful and interactive visualizations of mathematical functions using Altair. As an example, we will plot three commonly used functions: sin(x) and cos(x). We will start by creating example data and plotting it with Matplotlib, and then transform the data into a dataframe and visualize it using Altair.
+
+## Creating Example Data
+
+Let's begin by generating our example data. We will create an array of x-values ranging from -2π to 2π and compute the corresponding y-values for each function.
+
+```{python}
+import numpy as np
+import pandas as pd
+
+# Create an array of x-values
+x_values = np.linspace(-2 * np.pi, 2 * np.pi, 1000)
+
+# Compute y-values for each function
+y_sin = np.sin(x_values)
+y_cos = np.cos(x_values)
+```
+
+## Plotting with Matplotlib
+
+Now that we have our data, let's create a simple line plot for each function using Matplotlib.
+```{python}
+import matplotlib.pyplot as plt
+
+plt.plot(x_values, y_sin, label="sin(x)")
+plt.plot(x_values, y_cos, label="cos(x)")
+
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.title("Functions: sin(x), cos(x)")
+plt.show()
+```
+
+As you can see, Matplotlib allows us to quickly create line plots for our functions. However, these plots are static and do not provide the interactivity that can help us gain deeper insights into our data.
+
+## Transforming Data into a Dataframe
+
+To create interactive visualizations with Altair, we first need to transform our data into a long-format dataframe. This means that we will have a single column for the x-values, a column for the y-values, and another column to indicate the function.
+```{python}
+data = pd.DataFrame(
+    {
+        "x": np.tile(x_values, 2),
+        "y": np.concatenate([y_sin, y_cos]),
+        "function": np.repeat(["sin(x)", "cos(x)"], len(x_values)),
+    }
+)
+```
+
+## Interactive Visualizations with Altair
+
+Now that we have our data in the right format, let's create an interactive line chart using Altair.
+
+```{python}
+import altair as alt
+
+# Create an interactive line chart
+chart = (
+    alt.Chart(data)
+    .mark_line()
+    .encode(x="x", y="y", color="function", tooltip=["function", "x", "y"])
+    .interactive()
+    .properties(title="Interactive Functions: sin(x), cos(x)")
+)
+
+chart
+```
+The resulting chart is not only visually appealing but also allows you to interact with the data. You can hover over the lines to see the values of x and y for each function, and you can pan and zoom to focus on specific areas of the chart. This interactivity enables you to explore your data more thoroughly and gain new insights that might have been difficult to obtain with static plots.
+
+In this chapter, we have learned how to use Altair to create beautiful and interactive visualizations of mathematical functions. By transforming our data into a long-format dataframe and leveraging the power of Altair, we have unlocked a new level of understanding and exploration for our data.
