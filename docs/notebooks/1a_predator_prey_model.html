@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2023-04-12">
 
 <title>Predator prey model</title>
 <style>
@@ -192,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Predator prey model</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Predator prey model</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -200,6 +201,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
 
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 12, 2023</p>
+    </div>
+  </div>
 
 
   </div>
@@ -209,13 +216,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>Import statements are hidden below.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-tags="[&quot;hide-input&quot;]" data-execution_count="1">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="model" class="level2">
 <h2 class="anchored" data-anchor-id="model">Model</h2>
@@ -228,142 +232,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 \]</span></p>
 <p>The constants <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span>, and <span class="math inline">\(\delta\)</span> describe the population gain and loss. Implementing this in code with some default parameters, we get the following two functions. Note that the second function is just a wrapper that can be used by the integrator later on.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="2">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predator_prey_model(predator, prey):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    alpha, beta, gamma, delta <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">2.0</span>, <span class="fl">0.6</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        alpha <span class="op">*</span> prey <span class="op">-</span> beta <span class="op">*</span> prey <span class="op">*</span> predator,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">*</span> prey <span class="op">*</span> predator <span class="op">-</span> gamma <span class="op">*</span> predator,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predator_prey_ode_wrapper(y, t):</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predator_prey_model(y[<span class="dv">1</span>], y[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> predator_prey_model(predator, prey):</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    alpha, beta, gamma, delta <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">2.0</span>, <span class="fl">0.6</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="cf">return</span> (</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        alpha <span class="op">*</span> prey <span class="op">-</span> beta <span class="op">*</span> prey <span class="op">*</span> predator,</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        delta <span class="op">*</span> prey <span class="op">*</span> predator <span class="op">-</span> gamma <span class="op">*</span> predator,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    )</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">def</span> predator_prey_ode_wrapper(y, t):</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="cf">return</span> predator_prey_model(y[<span class="dv">1</span>], y[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="solving-the-differential-equation" class="level2">
 <h2 class="anchored" data-anchor-id="solving-the-differential-equation">Solving the differential equation</h2>
 <p>We use <code>scipy</code> to solve the differential equation over a certain time interval <code>t</code>. Our integrator requires an initial population of predators and prey. Here, we solve the differential equation four times, each time with different initial conditions. The resulting data is aggregated into a <code>pd.DataFrame</code> and each simulation run gets its own unique ID.</p>
 <div class="cell" data-execution_count="3">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, step<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>source_list <span class="op">=</span> []</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span>, y0 <span class="kw">in</span> <span class="bu">enumerate</span>([[<span class="dv">10</span>, <span class="dv">10</span>], [<span class="dv">5</span>, <span class="dv">10</span>], [<span class="dv">10</span>, <span class="dv">5</span>], [<span class="dv">5</span>, <span class="dv">5</span>]]):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    predator_prey <span class="op">=</span> scipy.integrate.odeint(predator_prey_ode_wrapper, y0<span class="op">=</span>y0, t<span class="op">=</span>t)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    source_list.append(</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Time"</span>: t,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Prey"</span>: predator_prey[:, <span class="dv">0</span>],</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Predator"</span>: predator_prey[:, <span class="dv">1</span>],</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ID"</span>: <span class="bu">id</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.concat(source_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, step<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>source_list <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="cf">for</span> <span class="bu">id</span>, y0 <span class="kw">in</span> <span class="bu">enumerate</span>([[<span class="dv">10</span>, <span class="dv">10</span>], [<span class="dv">5</span>, <span class="dv">10</span>], [<span class="dv">10</span>, <span class="dv">5</span>], [<span class="dv">5</span>, <span class="dv">5</span>]]):</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    predator_prey <span class="op">=</span> scipy.integrate.odeint(predator_prey_ode_wrapper, y0<span class="op">=</span>y0, t<span class="op">=</span>t)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    source_list.append(</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        pd.DataFrame(</span>
+<span id="cb3-7"><a href="#cb3-7"></a>            {</span>
+<span id="cb3-8"><a href="#cb3-8"></a>                <span class="st">"Time"</span>: t,</span>
+<span id="cb3-9"><a href="#cb3-9"></a>                <span class="st">"Prey"</span>: predator_prey[:, <span class="dv">0</span>],</span>
+<span id="cb3-10"><a href="#cb3-10"></a>                <span class="st">"Predator"</span>: predator_prey[:, <span class="dv">1</span>],</span>
+<span id="cb3-11"><a href="#cb3-11"></a>                <span class="st">"ID"</span>: <span class="bu">id</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>            }</span>
+<span id="cb3-13"><a href="#cb3-13"></a>        )</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    )</span>
+<span id="cb3-15"><a href="#cb3-15"></a>source <span class="op">=</span> pd.concat(source_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to solving the differential equation, we also want to visualize the vector field. In this case, the vector field tells us at every point in phase-space, what the change in population is for the predators and the prey.</p>
 <div class="cell" data-execution_count="4">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prey <span class="op">=</span> np.arange(source[<span class="st">"Prey"</span>].<span class="bu">max</span>())</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>predator <span class="op">=</span> np.arange(source[<span class="st">"Predator"</span>].<span class="bu">max</span>())</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>predator, prey <span class="op">=</span> np.meshgrid(predator, prey)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>predator, prey <span class="op">=</span> predator.flatten(), prey.flatten()</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dPrey, dPredator <span class="op">=</span> predator_prey_model(predator, prey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>prey <span class="op">=</span> np.arange(source[<span class="st">"Prey"</span>].<span class="bu">max</span>())</span>
+<span id="cb4-2"><a href="#cb4-2"></a>predator <span class="op">=</span> np.arange(source[<span class="st">"Predator"</span>].<span class="bu">max</span>())</span>
+<span id="cb4-3"><a href="#cb4-3"></a>predator, prey <span class="op">=</span> np.meshgrid(predator, prey)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>predator, prey <span class="op">=</span> predator.flatten(), prey.flatten()</span>
+<span id="cb4-5"><a href="#cb4-5"></a>dPrey, dPredator <span class="op">=</span> predator_prey_model(predator, prey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also store this data inside a <code>pd.DataFrame</code>.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="5">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>source_vector_field <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Predator"</span>: predator,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prey"</span>: prey,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Angle"</span>: np.arctan2(dPredator, dPrey),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Population Change"</span>: dPrey <span class="op">+</span> dPredator,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>source_vector_field <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    {</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        <span class="st">"Predator"</span>: predator,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        <span class="st">"Prey"</span>: prey,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="st">"Angle"</span>: np.arctan2(dPredator, dPrey),</span>
+<span id="cb5-6"><a href="#cb5-6"></a>        <span class="st">"Population Change"</span>: dPrey <span class="op">+</span> dPredator,</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    }</span>
+<span id="cb5-8"><a href="#cb5-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualization" class="level2">
 <h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
 <p>Now we visualize the data. We will create two plots, one showing the phase-space with the vector field, and one showing the evolution of the populations over time. The phase-space diagram and the time series are using the same data so we can create a base chart that contains all the common content. We also add a <code>selection</code> that allows us to highlight different runs of our simulation later on. We use <code>detail</code> as a way to tell our <code>altair</code> plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.</p>
 <div class="cell" data-execution_count="6">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"ID"</span>], on<span class="op">=</span><span class="st">"mouseover"</span>, toggle<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> (</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    alt.Chart(source)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    .mark_line()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        detail<span class="op">=</span><span class="st">"ID"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.1</span>)),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    .add_params(selection)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">500</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"ID"</span>], on<span class="op">=</span><span class="st">"mouseover"</span>, toggle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>base <span class="op">=</span> (</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    alt.Chart(source)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    .mark_line()</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    .encode(</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        detail<span class="op">=</span><span class="st">"ID"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>        opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.1</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8"></a>    )</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    .add_params(selection)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    .properties(width<span class="op">=</span><span class="dv">500</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With this base chart, we create the time series and the phase-space diagram next. For the time series, we have to transform our wide <code>pd.DataFrame</code> into a long <code>pd.DataFrame</code> using <a href="https://altair-viz.github.io/user_guide/transform/fold.html#user-guide-fold-transform"><code>transform_fold</code></a>.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="7">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chart_time_series <span class="op">=</span> (</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    base.transform_fold([<span class="st">"Predator"</span>, <span class="st">"Prey"</span>], [<span class="st">"Species"</span>, <span class="st">"Population"</span>])</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Time:Q"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Population:Q"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"Species:N"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    .properties(title<span class="op">=</span><span class="st">"Time series"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>chart_phase_space <span class="op">=</span> base.encode(</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>alt.value(<span class="st">"black"</span>),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>).properties(title<span class="op">=</span><span class="st">"Phase space"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>chart_time_series <span class="op">=</span> (</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    base.transform_fold([<span class="st">"Predator"</span>, <span class="st">"Prey"</span>], [<span class="st">"Species"</span>, <span class="st">"Population"</span>])</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    .encode(</span>
+<span id="cb7-4"><a href="#cb7-4"></a>        x<span class="op">=</span><span class="st">"Time:Q"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5"></a>        y<span class="op">=</span><span class="st">"Population:Q"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>        color<span class="op">=</span><span class="st">"Species:N"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    )</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    .properties(title<span class="op">=</span><span class="st">"Time series"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>chart_phase_space <span class="op">=</span> base.encode(</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    color<span class="op">=</span>alt.value(<span class="st">"black"</span>),</span>
+<span id="cb7-14"><a href="#cb7-14"></a>).properties(title<span class="op">=</span><span class="st">"Phase space"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next we create the vector field using the <code>wedge</code> shape. Each arrow in phase-space points at an angle that represents the change in the populations.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chart_vector_field <span class="op">=</span> (</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    alt.Chart(source_vector_field)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    .mark_point(shape<span class="op">=</span><span class="st">"wedge"</span>, filled<span class="op">=</span><span class="va">True</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        angle<span class="op">=</span>alt.Angle(</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Angle"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="op">-</span>np.pi, np.pi], <span class="bu">range</span><span class="op">=</span>[<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>])</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"Population Change:Q"</span>),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>chart_vector_field <span class="op">=</span> (</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    alt.Chart(source_vector_field)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    .mark_point(shape<span class="op">=</span><span class="st">"wedge"</span>, filled<span class="op">=</span><span class="va">True</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    .encode(</span>
+<span id="cb8-5"><a href="#cb8-5"></a>        x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        angle<span class="op">=</span>alt.Angle(</span>
+<span id="cb8-8"><a href="#cb8-8"></a>            <span class="st">"Angle"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="op">-</span>np.pi, np.pi], <span class="bu">range</span><span class="op">=</span>[<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>])</span>
+<span id="cb8-9"><a href="#cb8-9"></a>        ),</span>
+<span id="cb8-10"><a href="#cb8-10"></a>        color<span class="op">=</span>alt.Color(<span class="st">"Population Change:Q"</span>),</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    )</span>
+<span id="cb8-12"><a href="#cb8-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>At last, we combine our plots to get the final result. Try to hover over some of the lines and you will see the runs of our simulations being highlighted in both charts.</p>
 <div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="9">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>chart_time_series <span class="op">&amp;</span> chart_vector_field <span class="op">+</span> chart_phase_space</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>chart_time_series <span class="op">&amp;</span> chart_vector_field <span class="op">+</span> chart_phase_space</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 
-<div id="altair-viz-b54d58f631e34d088831f648b5306d6b"></div>
+<div id="altair-viz-128afc9ee74846039224c562991f18a6"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b54d58f631e34d088831f648b5306d6b") {
-      outputDiv = document.getElementById("altair-viz-b54d58f631e34d088831f648b5306d6b");
+    if (outputDiv.id !== "altair-viz-128afc9ee74846039224c562991f18a6") {
+      outputDiv = document.getElementById("altair-viz-128afc9ee74846039224c562991f18a6");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -704,178 +684,178 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Predator prey model</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">  enabled: true</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Import statements are hidden below.</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># | tags: [hide-input]</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>Let's start with one of the simples models for dynamical systems, the predator-prey model.</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>Here, the population of the prey ($x$) and the predator ($y$) follow the following differential equation:</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    \frac{dx}{dt} &amp;= \alpha x - \beta x  y <span class="sc">\\</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    \frac{dy}{dt} &amp;= \delta x  y - \gamma y</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>The constants $\alpha$, $\beta$, $\gamma$, and $\delta$ describe the population gain and loss.</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>Implementing this in code with some default parameters, we get the following two functions. Note that the second function is just a wrapper that can be used by the integrator later on.</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: subslide}</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predator_prey_model(predator, prey):</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    alpha, beta, gamma, delta <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">2.0</span>, <span class="fl">0.6</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>        alpha <span class="op">*</span> prey <span class="op">-</span> beta <span class="op">*</span> prey <span class="op">*</span> predator,</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">*</span> prey <span class="op">*</span> predator <span class="op">-</span> gamma <span class="op">*</span> predator,</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predator_prey_ode_wrapper(y, t):</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predator_prey_model(y[<span class="dv">1</span>], y[<span class="dv">0</span>])</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solving the differential equation</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>We use <span class="in">`scipy`</span> to solve the differential equation over a certain time interval <span class="in">`t`</span>.</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>Our integrator requires an initial population of predators and prey. Here, we solve the differential</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>equation four times, each time with different initial conditions. The resulting data is</span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>aggregated into a <span class="in">`pd.DataFrame`</span> and each simulation run gets its own unique ID.</span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, step<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>source_list <span class="op">=</span> []</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">id</span>, y0 <span class="kw">in</span> <span class="bu">enumerate</span>([[<span class="dv">10</span>, <span class="dv">10</span>], [<span class="dv">5</span>, <span class="dv">10</span>], [<span class="dv">10</span>, <span class="dv">5</span>], [<span class="dv">5</span>, <span class="dv">5</span>]]):</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>    predator_prey <span class="op">=</span> scipy.integrate.odeint(predator_prey_ode_wrapper, y0<span class="op">=</span>y0, t<span class="op">=</span>t)</span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>    source_list.append(</span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame(</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Time"</span>: t,</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Prey"</span>: predator_prey[:, <span class="dv">0</span>],</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Predator"</span>: predator_prey[:, <span class="dv">1</span>],</span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ID"</span>: <span class="bu">id</span>,</span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> pd.concat(source_list)</span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>In addition to solving the differential equation, we also want to visualize the vector field.</span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>In this case, the vector field tells us at every point in phase-space, what the change in population is for the predators and the prey.</span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>prey <span class="op">=</span> np.arange(source[<span class="st">"Prey"</span>].<span class="bu">max</span>())</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>predator <span class="op">=</span> np.arange(source[<span class="st">"Predator"</span>].<span class="bu">max</span>())</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>predator, prey <span class="op">=</span> np.meshgrid(predator, prey)</span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>predator, prey <span class="op">=</span> predator.flatten(), prey.flatten()</span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>dPrey, dPredator <span class="op">=</span> predator_prey_model(predator, prey)</span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>We also store this data inside a <span class="in">`pd.DataFrame`</span>.</span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: subslide}</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>source_vector_field <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Predator"</span>: predator,</span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Prey"</span>: prey,</span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Angle"</span>: np.arctan2(dPredator, dPrey),</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Population Change"</span>: dPrey <span class="op">+</span> dPredator,</span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization</span></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>Now we visualize the data. We will create two plots, one showing the phase-space with</span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>the vector field, and one showing the evolution of the populations over time.</span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>The phase-space diagram and the time series are using the same data so we can create</span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>a base chart that contains all the common content. We also add a <span class="in">`selection`</span> that allows</span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>us to highlight different runs of our simulation later on.</span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>We use <span class="in">`detail`</span> as a way to tell our <span class="in">`altair`</span> plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.</span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"ID"</span>], on<span class="op">=</span><span class="st">"mouseover"</span>, toggle<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>base <span class="op">=</span> (</span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>    alt.Chart(source)</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>    .mark_line()</span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>        detail<span class="op">=</span><span class="st">"ID"</span>,</span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>        opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.1</span>)),</span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>    .add_params(selection)</span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">500</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>With this base chart, we create the time series and the phase-space diagram next.</span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>For the time series, we have to transform our wide <span class="in">`pd.DataFrame`</span> into a long <span class="in">`pd.DataFrame`</span> using <span class="co">[</span><span class="ot">`transform_fold`</span><span class="co">](https://altair-viz.github.io/user_guide/transform/fold.html#user-guide-fold-transform)</span>.</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>chart_time_series <span class="op">=</span> (</span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    base.transform_fold([<span class="st">"Predator"</span>, <span class="st">"Prey"</span>], [<span class="st">"Species"</span>, <span class="st">"Population"</span>])</span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="st">"Time:Q"</span>,</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="st">"Population:Q"</span>,</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"Species:N"</span>,</span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a>    .properties(title<span class="op">=</span><span class="st">"Time series"</span>)</span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>chart_phase_space <span class="op">=</span> base.encode(</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>alt.value(<span class="st">"black"</span>),</span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>).properties(title<span class="op">=</span><span class="st">"Phase space"</span>)</span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>Next we create the vector field using the <span class="in">`wedge`</span> shape. Each arrow in phase-space</span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>points at an angle that represents the change in the populations.</span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>chart_vector_field <span class="op">=</span> (</span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>    alt.Chart(source_vector_field)</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>    .mark_point(shape<span class="op">=</span><span class="st">"wedge"</span>, filled<span class="op">=</span><span class="va">True</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>        angle<span class="op">=</span>alt.Angle(</span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Angle"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="op">-</span>np.pi, np.pi], <span class="bu">range</span><span class="op">=</span>[<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>])</span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"Population Change:Q"</span>),</span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>At last, we combine our plots to get the final result.</span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>Try to hover over some of the lines and you will see the runs of our simulations being highlighted in both charts.</span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>chart_time_series <span class="op">&amp;</span> chart_vector_field <span class="op">+</span> chart_phase_space</span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="an">title:</span><span class="co"> Predator prey model</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="an">execute:</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">  enabled: true</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">---</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a>Import statements are hidden below.</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="in">```{python}</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co"># | tags: [hide-input]</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="im">import</span> scipy</span>
+<span id="cb10-21"><a href="#cb10-21"></a></span>
+<span id="cb10-22"><a href="#cb10-22"></a></span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="in">```</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a></span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="fu">## Model</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a></span>
+<span id="cb10-27"><a href="#cb10-27"></a>Let's start with one of the simples models for dynamical systems, the predator-prey model.</span>
+<span id="cb10-28"><a href="#cb10-28"></a>Here, the population of the prey ($x$) and the predator ($y$) follow the following differential equation:</span>
+<span id="cb10-29"><a href="#cb10-29"></a></span>
+<span id="cb10-30"><a href="#cb10-30"></a>$$</span>
+<span id="cb10-31"><a href="#cb10-31"></a>\begin{aligned}</span>
+<span id="cb10-32"><a href="#cb10-32"></a>    \frac{dx}{dt} &amp;= \alpha x - \beta x  y <span class="sc">\\</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a>    \frac{dy}{dt} &amp;= \delta x  y - \gamma y</span>
+<span id="cb10-34"><a href="#cb10-34"></a>\end{aligned}</span>
+<span id="cb10-35"><a href="#cb10-35"></a>$$</span>
+<span id="cb10-36"><a href="#cb10-36"></a></span>
+<span id="cb10-37"><a href="#cb10-37"></a>The constants $\alpha$, $\beta$, $\gamma$, and $\delta$ describe the population gain and loss.</span>
+<span id="cb10-38"><a href="#cb10-38"></a>Implementing this in code with some default parameters, we get the following two functions. Note that the second function is just a wrapper that can be used by the integrator later on.</span>
+<span id="cb10-39"><a href="#cb10-39"></a></span>
+<span id="cb10-42"><a href="#cb10-42"></a><span class="in">```{python}</span></span>
+<span id="cb10-43"><a href="#cb10-43"></a><span class="co"># | slideshow: {slide_type: subslide}</span></span>
+<span id="cb10-44"><a href="#cb10-44"></a><span class="kw">def</span> predator_prey_model(predator, prey):</span>
+<span id="cb10-45"><a href="#cb10-45"></a>    alpha, beta, gamma, delta <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">2.0</span>, <span class="fl">0.6</span></span>
+<span id="cb10-46"><a href="#cb10-46"></a>    <span class="cf">return</span> (</span>
+<span id="cb10-47"><a href="#cb10-47"></a>        alpha <span class="op">*</span> prey <span class="op">-</span> beta <span class="op">*</span> prey <span class="op">*</span> predator,</span>
+<span id="cb10-48"><a href="#cb10-48"></a>        delta <span class="op">*</span> prey <span class="op">*</span> predator <span class="op">-</span> gamma <span class="op">*</span> predator,</span>
+<span id="cb10-49"><a href="#cb10-49"></a>    )</span>
+<span id="cb10-50"><a href="#cb10-50"></a></span>
+<span id="cb10-51"><a href="#cb10-51"></a></span>
+<span id="cb10-52"><a href="#cb10-52"></a><span class="kw">def</span> predator_prey_ode_wrapper(y, t):</span>
+<span id="cb10-53"><a href="#cb10-53"></a>    <span class="cf">return</span> predator_prey_model(y[<span class="dv">1</span>], y[<span class="dv">0</span>])</span>
+<span id="cb10-54"><a href="#cb10-54"></a></span>
+<span id="cb10-55"><a href="#cb10-55"></a></span>
+<span id="cb10-56"><a href="#cb10-56"></a><span class="in">```</span></span>
+<span id="cb10-57"><a href="#cb10-57"></a></span>
+<span id="cb10-58"><a href="#cb10-58"></a><span class="fu">## Solving the differential equation</span></span>
+<span id="cb10-59"><a href="#cb10-59"></a></span>
+<span id="cb10-60"><a href="#cb10-60"></a>We use <span class="in">`scipy`</span> to solve the differential equation over a certain time interval <span class="in">`t`</span>.</span>
+<span id="cb10-61"><a href="#cb10-61"></a>Our integrator requires an initial population of predators and prey. Here, we solve the differential</span>
+<span id="cb10-62"><a href="#cb10-62"></a>equation four times, each time with different initial conditions. The resulting data is</span>
+<span id="cb10-63"><a href="#cb10-63"></a>aggregated into a <span class="in">`pd.DataFrame`</span> and each simulation run gets its own unique ID.</span>
+<span id="cb10-64"><a href="#cb10-64"></a></span>
+<span id="cb10-67"><a href="#cb10-67"></a><span class="in">```{python}</span></span>
+<span id="cb10-68"><a href="#cb10-68"></a>t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, step<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb10-69"><a href="#cb10-69"></a>source_list <span class="op">=</span> []</span>
+<span id="cb10-70"><a href="#cb10-70"></a><span class="cf">for</span> <span class="bu">id</span>, y0 <span class="kw">in</span> <span class="bu">enumerate</span>([[<span class="dv">10</span>, <span class="dv">10</span>], [<span class="dv">5</span>, <span class="dv">10</span>], [<span class="dv">10</span>, <span class="dv">5</span>], [<span class="dv">5</span>, <span class="dv">5</span>]]):</span>
+<span id="cb10-71"><a href="#cb10-71"></a>    predator_prey <span class="op">=</span> scipy.integrate.odeint(predator_prey_ode_wrapper, y0<span class="op">=</span>y0, t<span class="op">=</span>t)</span>
+<span id="cb10-72"><a href="#cb10-72"></a>    source_list.append(</span>
+<span id="cb10-73"><a href="#cb10-73"></a>        pd.DataFrame(</span>
+<span id="cb10-74"><a href="#cb10-74"></a>            {</span>
+<span id="cb10-75"><a href="#cb10-75"></a>                <span class="st">"Time"</span>: t,</span>
+<span id="cb10-76"><a href="#cb10-76"></a>                <span class="st">"Prey"</span>: predator_prey[:, <span class="dv">0</span>],</span>
+<span id="cb10-77"><a href="#cb10-77"></a>                <span class="st">"Predator"</span>: predator_prey[:, <span class="dv">1</span>],</span>
+<span id="cb10-78"><a href="#cb10-78"></a>                <span class="st">"ID"</span>: <span class="bu">id</span>,</span>
+<span id="cb10-79"><a href="#cb10-79"></a>            }</span>
+<span id="cb10-80"><a href="#cb10-80"></a>        )</span>
+<span id="cb10-81"><a href="#cb10-81"></a>    )</span>
+<span id="cb10-82"><a href="#cb10-82"></a>source <span class="op">=</span> pd.concat(source_list)</span>
+<span id="cb10-83"><a href="#cb10-83"></a><span class="in">```</span></span>
+<span id="cb10-84"><a href="#cb10-84"></a></span>
+<span id="cb10-85"><a href="#cb10-85"></a>In addition to solving the differential equation, we also want to visualize the vector field.</span>
+<span id="cb10-86"><a href="#cb10-86"></a>In this case, the vector field tells us at every point in phase-space, what the change in population is for the predators and the prey.</span>
+<span id="cb10-87"><a href="#cb10-87"></a></span>
+<span id="cb10-90"><a href="#cb10-90"></a><span class="in">```{python}</span></span>
+<span id="cb10-91"><a href="#cb10-91"></a>prey <span class="op">=</span> np.arange(source[<span class="st">"Prey"</span>].<span class="bu">max</span>())</span>
+<span id="cb10-92"><a href="#cb10-92"></a>predator <span class="op">=</span> np.arange(source[<span class="st">"Predator"</span>].<span class="bu">max</span>())</span>
+<span id="cb10-93"><a href="#cb10-93"></a>predator, prey <span class="op">=</span> np.meshgrid(predator, prey)</span>
+<span id="cb10-94"><a href="#cb10-94"></a>predator, prey <span class="op">=</span> predator.flatten(), prey.flatten()</span>
+<span id="cb10-95"><a href="#cb10-95"></a>dPrey, dPredator <span class="op">=</span> predator_prey_model(predator, prey)</span>
+<span id="cb10-96"><a href="#cb10-96"></a><span class="in">```</span></span>
+<span id="cb10-97"><a href="#cb10-97"></a></span>
+<span id="cb10-98"><a href="#cb10-98"></a>We also store this data inside a <span class="in">`pd.DataFrame`</span>.</span>
+<span id="cb10-99"><a href="#cb10-99"></a></span>
+<span id="cb10-102"><a href="#cb10-102"></a><span class="in">```{python}</span></span>
+<span id="cb10-103"><a href="#cb10-103"></a><span class="co"># | slideshow: {slide_type: subslide}</span></span>
+<span id="cb10-104"><a href="#cb10-104"></a>source_vector_field <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb10-105"><a href="#cb10-105"></a>    {</span>
+<span id="cb10-106"><a href="#cb10-106"></a>        <span class="st">"Predator"</span>: predator,</span>
+<span id="cb10-107"><a href="#cb10-107"></a>        <span class="st">"Prey"</span>: prey,</span>
+<span id="cb10-108"><a href="#cb10-108"></a>        <span class="st">"Angle"</span>: np.arctan2(dPredator, dPrey),</span>
+<span id="cb10-109"><a href="#cb10-109"></a>        <span class="st">"Population Change"</span>: dPrey <span class="op">+</span> dPredator,</span>
+<span id="cb10-110"><a href="#cb10-110"></a>    }</span>
+<span id="cb10-111"><a href="#cb10-111"></a>)</span>
+<span id="cb10-112"><a href="#cb10-112"></a><span class="in">```</span></span>
+<span id="cb10-113"><a href="#cb10-113"></a></span>
+<span id="cb10-114"><a href="#cb10-114"></a><span class="fu">## Visualization</span></span>
+<span id="cb10-115"><a href="#cb10-115"></a>Now we visualize the data. We will create two plots, one showing the phase-space with</span>
+<span id="cb10-116"><a href="#cb10-116"></a>the vector field, and one showing the evolution of the populations over time.</span>
+<span id="cb10-117"><a href="#cb10-117"></a>The phase-space diagram and the time series are using the same data so we can create</span>
+<span id="cb10-118"><a href="#cb10-118"></a>a base chart that contains all the common content. We also add a <span class="in">`selection`</span> that allows</span>
+<span id="cb10-119"><a href="#cb10-119"></a>us to highlight different runs of our simulation later on.</span>
+<span id="cb10-120"><a href="#cb10-120"></a>We use <span class="in">`detail`</span> as a way to tell our <span class="in">`altair`</span> plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.</span>
+<span id="cb10-121"><a href="#cb10-121"></a></span>
+<span id="cb10-124"><a href="#cb10-124"></a><span class="in">```{python}</span></span>
+<span id="cb10-125"><a href="#cb10-125"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"ID"</span>], on<span class="op">=</span><span class="st">"mouseover"</span>, toggle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-126"><a href="#cb10-126"></a>base <span class="op">=</span> (</span>
+<span id="cb10-127"><a href="#cb10-127"></a>    alt.Chart(source)</span>
+<span id="cb10-128"><a href="#cb10-128"></a>    .mark_line()</span>
+<span id="cb10-129"><a href="#cb10-129"></a>    .encode(</span>
+<span id="cb10-130"><a href="#cb10-130"></a>        detail<span class="op">=</span><span class="st">"ID"</span>,</span>
+<span id="cb10-131"><a href="#cb10-131"></a>        opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="dv">1</span>), alt.value(<span class="fl">0.1</span>)),</span>
+<span id="cb10-132"><a href="#cb10-132"></a>    )</span>
+<span id="cb10-133"><a href="#cb10-133"></a>    .add_params(selection)</span>
+<span id="cb10-134"><a href="#cb10-134"></a>    .properties(width<span class="op">=</span><span class="dv">500</span>, height<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb10-135"><a href="#cb10-135"></a>)</span>
+<span id="cb10-136"><a href="#cb10-136"></a><span class="in">```</span></span>
+<span id="cb10-137"><a href="#cb10-137"></a></span>
+<span id="cb10-138"><a href="#cb10-138"></a>With this base chart, we create the time series and the phase-space diagram next.</span>
+<span id="cb10-139"><a href="#cb10-139"></a>For the time series, we have to transform our wide <span class="in">`pd.DataFrame`</span> into a long <span class="in">`pd.DataFrame`</span> using <span class="co">[</span><span class="ot">`transform_fold`</span><span class="co">](https://altair-viz.github.io/user_guide/transform/fold.html#user-guide-fold-transform)</span>.</span>
+<span id="cb10-140"><a href="#cb10-140"></a></span>
+<span id="cb10-143"><a href="#cb10-143"></a><span class="in">```{python}</span></span>
+<span id="cb10-144"><a href="#cb10-144"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
+<span id="cb10-145"><a href="#cb10-145"></a>chart_time_series <span class="op">=</span> (</span>
+<span id="cb10-146"><a href="#cb10-146"></a>    base.transform_fold([<span class="st">"Predator"</span>, <span class="st">"Prey"</span>], [<span class="st">"Species"</span>, <span class="st">"Population"</span>])</span>
+<span id="cb10-147"><a href="#cb10-147"></a>    .encode(</span>
+<span id="cb10-148"><a href="#cb10-148"></a>        x<span class="op">=</span><span class="st">"Time:Q"</span>,</span>
+<span id="cb10-149"><a href="#cb10-149"></a>        y<span class="op">=</span><span class="st">"Population:Q"</span>,</span>
+<span id="cb10-150"><a href="#cb10-150"></a>        color<span class="op">=</span><span class="st">"Species:N"</span>,</span>
+<span id="cb10-151"><a href="#cb10-151"></a>    )</span>
+<span id="cb10-152"><a href="#cb10-152"></a>    .properties(title<span class="op">=</span><span class="st">"Time series"</span>)</span>
+<span id="cb10-153"><a href="#cb10-153"></a>)</span>
+<span id="cb10-154"><a href="#cb10-154"></a>chart_phase_space <span class="op">=</span> base.encode(</span>
+<span id="cb10-155"><a href="#cb10-155"></a>    x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb10-156"><a href="#cb10-156"></a>    y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
+<span id="cb10-157"><a href="#cb10-157"></a>    color<span class="op">=</span>alt.value(<span class="st">"black"</span>),</span>
+<span id="cb10-158"><a href="#cb10-158"></a>).properties(title<span class="op">=</span><span class="st">"Phase space"</span>)</span>
+<span id="cb10-159"><a href="#cb10-159"></a><span class="in">```</span></span>
+<span id="cb10-160"><a href="#cb10-160"></a></span>
+<span id="cb10-161"><a href="#cb10-161"></a>Next we create the vector field using the <span class="in">`wedge`</span> shape. Each arrow in phase-space</span>
+<span id="cb10-162"><a href="#cb10-162"></a>points at an angle that represents the change in the populations.</span>
+<span id="cb10-163"><a href="#cb10-163"></a></span>
+<span id="cb10-166"><a href="#cb10-166"></a><span class="in">```{python}</span></span>
+<span id="cb10-167"><a href="#cb10-167"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
+<span id="cb10-168"><a href="#cb10-168"></a>chart_vector_field <span class="op">=</span> (</span>
+<span id="cb10-169"><a href="#cb10-169"></a>    alt.Chart(source_vector_field)</span>
+<span id="cb10-170"><a href="#cb10-170"></a>    .mark_point(shape<span class="op">=</span><span class="st">"wedge"</span>, filled<span class="op">=</span><span class="va">True</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb10-171"><a href="#cb10-171"></a>    .encode(</span>
+<span id="cb10-172"><a href="#cb10-172"></a>        x<span class="op">=</span>alt.X(<span class="st">"Predator:Q"</span>, sort<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb10-173"><a href="#cb10-173"></a>        y<span class="op">=</span>alt.Y(<span class="st">"Prey:Q"</span>),</span>
+<span id="cb10-174"><a href="#cb10-174"></a>        angle<span class="op">=</span>alt.Angle(</span>
+<span id="cb10-175"><a href="#cb10-175"></a>            <span class="st">"Angle"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="op">-</span>np.pi, np.pi], <span class="bu">range</span><span class="op">=</span>[<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>])</span>
+<span id="cb10-176"><a href="#cb10-176"></a>        ),</span>
+<span id="cb10-177"><a href="#cb10-177"></a>        color<span class="op">=</span>alt.Color(<span class="st">"Population Change:Q"</span>),</span>
+<span id="cb10-178"><a href="#cb10-178"></a>    )</span>
+<span id="cb10-179"><a href="#cb10-179"></a>)</span>
+<span id="cb10-180"><a href="#cb10-180"></a><span class="in">```</span></span>
+<span id="cb10-181"><a href="#cb10-181"></a></span>
+<span id="cb10-182"><a href="#cb10-182"></a>At last, we combine our plots to get the final result.</span>
+<span id="cb10-183"><a href="#cb10-183"></a>Try to hover over some of the lines and you will see the runs of our simulations being highlighted in both charts.</span>
+<span id="cb10-184"><a href="#cb10-184"></a></span>
+<span id="cb10-187"><a href="#cb10-187"></a><span class="in">```{python}</span></span>
+<span id="cb10-188"><a href="#cb10-188"></a><span class="co"># | slideshow: {slide_type: slide}</span></span>
+<span id="cb10-189"><a href="#cb10-189"></a>chart_time_series <span class="op">&amp;</span> chart_vector_field <span class="op">+</span> chart_phase_space</span>
+<span id="cb10-190"><a href="#cb10-190"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -1,6 +1,7 @@
 project:
   type: website
   output-dir: docs
+date: last-modified
 
 execute:
   cache: false
@@ -13,7 +14,7 @@ book:
   # keyword: polars, pandas, python, dataframe, performance, data science, data engineering
   # url: https://kevinheavey.github.io/modern-polars/
   sidebar:
-    background: "#F5F5F5"
+    # background: "#F5F5F5"
     search: true
   # repo-url: https://github.com/thomascamminady/altair_for_mathematicians
   # repo-subdir: book
@@ -47,7 +48,16 @@ website:
 
 format:
   html:
-    code-fold: true
+    code-fold: false
     code-tools: true
-    theme: cosmo
+    code-copy: true
+    code-link: true
+    highlight-style: dracula
+    code-line-numbers: true
+
+    theme:
+      - cosmo
+      - custom.scss
     toc: true
+    fontsize: 1.2em
+    linestretch: 1.7
