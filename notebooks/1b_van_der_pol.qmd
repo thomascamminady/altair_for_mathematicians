@@ -45,7 +45,7 @@ def explicit_euler(y0, t, ode, args):
     return y
 
 
-t = np.arange(0, 10, step=0.01)
+t = np.arange(0, 20, step=0.01)
 y = explicit_euler([10, 10], t, ode, 0.2)
 df = pd.DataFrame({"Time": t, "y0": y[:, 0], "y1": y[:, 1]})
 ```
