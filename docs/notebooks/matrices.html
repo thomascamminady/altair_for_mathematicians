@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>plt.pcolormesh(X, Y, Z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;matplotlib.collections.QuadMesh at 0x139980430&gt;</code></pre>
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x1581804c0&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="matrices_files/figure-html/cell-4-output-2.png" width="558" height="411"></p>
@@ -351,13 +351,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-11"><a href="#cb10-11"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 
-<div id="altair-viz-4a85aa8944bc46039faf6004f6476b76"></div>
+<div id="altair-viz-46f9159d867c44f0856797767adf8637"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4a85aa8944bc46039faf6004f6476b76") {
-      outputDiv = document.getElementById("altair-viz-4a85aa8944bc46039faf6004f6476b76");
+    if (outputDiv.id !== "altair-viz-46f9159d867c44f0856797767adf8637") {
+      outputDiv = document.getElementById("altair-viz-46f9159d867c44f0856797767adf8637");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -424,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-13"><a href="#cb11-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to visualizing the heatmap, we can display the evolution of each cell over time.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell page-columns page-full" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
 <span id="cb12-2"><a href="#cb12-2"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
 <span id="cb12-3"><a href="#cb12-3"></a>base <span class="op">=</span> (</span>
@@ -450,15 +450,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-23"><a href="#cb12-23"></a>linechart <span class="op">=</span> base.mark_line().encode(x<span class="op">=</span><span class="st">"t"</span>, y<span class="op">=</span><span class="st">"z"</span>, detail<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
 <span id="cb12-24"><a href="#cb12-24"></a></span>
 <span id="cb12-25"><a href="#cb12-25"></a>heatmap <span class="op">|</span> linechart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display column-screen-inset-right" data-execution_count="9">
 
-<div id="altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255"></div>
+<div id="altair-viz-e4815d49d5e54cab81e97f8dbdd0f838"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255") {
-      outputDiv = document.getElementById("altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255");
+    if (outputDiv.id !== "altair-viz-e4815d49d5e54cab81e97f8dbdd0f838") {
+      outputDiv = document.getElementById("altair-viz-e4815d49d5e54cab81e97f8dbdd0f838");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -888,32 +888,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-106"><a href="#cb13-106"></a>In addition to visualizing the heatmap, we can display the evolution of each cell over time.</span>
 <span id="cb13-107"><a href="#cb13-107"></a></span>
 <span id="cb13-110"><a href="#cb13-110"></a><span class="in">```{python}</span></span>
-<span id="cb13-111"><a href="#cb13-111"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
-<span id="cb13-112"><a href="#cb13-112"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
-<span id="cb13-113"><a href="#cb13-113"></a>base <span class="op">=</span> (</span>
-<span id="cb13-114"><a href="#cb13-114"></a>    alt.Chart(df)</span>
-<span id="cb13-115"><a href="#cb13-115"></a>    .encode(opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="fl">1.0</span>), alt.value(<span class="fl">0.2</span>)))</span>
-<span id="cb13-116"><a href="#cb13-116"></a>    .add_params(selection)</span>
-<span id="cb13-117"><a href="#cb13-117"></a>)</span>
-<span id="cb13-118"><a href="#cb13-118"></a>heatmap <span class="op">=</span> (</span>
-<span id="cb13-119"><a href="#cb13-119"></a>    base.mark_rect(clip<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-120"><a href="#cb13-120"></a>    .encode(</span>
-<span id="cb13-121"><a href="#cb13-121"></a>        x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
-<span id="cb13-122"><a href="#cb13-122"></a>        x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
-<span id="cb13-123"><a href="#cb13-123"></a>        y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
-<span id="cb13-124"><a href="#cb13-124"></a>        y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
-<span id="cb13-125"><a href="#cb13-125"></a>        color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
-<span id="cb13-126"><a href="#cb13-126"></a>    )</span>
-<span id="cb13-127"><a href="#cb13-127"></a>    .transform_calculate(</span>
-<span id="cb13-128"><a href="#cb13-128"></a>        x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
-<span id="cb13-129"><a href="#cb13-129"></a>        y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
-<span id="cb13-130"><a href="#cb13-130"></a>    )</span>
-<span id="cb13-131"><a href="#cb13-131"></a>    .transform_filter(alt.datum.t <span class="op">==</span> t[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb13-132"><a href="#cb13-132"></a>)</span>
-<span id="cb13-133"><a href="#cb13-133"></a>linechart <span class="op">=</span> base.mark_line().encode(x<span class="op">=</span><span class="st">"t"</span>, y<span class="op">=</span><span class="st">"z"</span>, detail<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
-<span id="cb13-134"><a href="#cb13-134"></a></span>
-<span id="cb13-135"><a href="#cb13-135"></a>heatmap <span class="op">|</span> linechart</span>
-<span id="cb13-136"><a href="#cb13-136"></a><span class="in">```</span></span>
+<span id="cb13-111"><a href="#cb13-111"></a><span class="co"># | column: screen-inset-right</span></span>
+<span id="cb13-112"><a href="#cb13-112"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
+<span id="cb13-113"><a href="#cb13-113"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
+<span id="cb13-114"><a href="#cb13-114"></a>base <span class="op">=</span> (</span>
+<span id="cb13-115"><a href="#cb13-115"></a>    alt.Chart(df)</span>
+<span id="cb13-116"><a href="#cb13-116"></a>    .encode(opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="fl">1.0</span>), alt.value(<span class="fl">0.2</span>)))</span>
+<span id="cb13-117"><a href="#cb13-117"></a>    .add_params(selection)</span>
+<span id="cb13-118"><a href="#cb13-118"></a>)</span>
+<span id="cb13-119"><a href="#cb13-119"></a>heatmap <span class="op">=</span> (</span>
+<span id="cb13-120"><a href="#cb13-120"></a>    base.mark_rect(clip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-121"><a href="#cb13-121"></a>    .encode(</span>
+<span id="cb13-122"><a href="#cb13-122"></a>        x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
+<span id="cb13-123"><a href="#cb13-123"></a>        x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
+<span id="cb13-124"><a href="#cb13-124"></a>        y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
+<span id="cb13-125"><a href="#cb13-125"></a>        y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
+<span id="cb13-126"><a href="#cb13-126"></a>        color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
+<span id="cb13-127"><a href="#cb13-127"></a>    )</span>
+<span id="cb13-128"><a href="#cb13-128"></a>    .transform_calculate(</span>
+<span id="cb13-129"><a href="#cb13-129"></a>        x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
+<span id="cb13-130"><a href="#cb13-130"></a>        y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
+<span id="cb13-131"><a href="#cb13-131"></a>    )</span>
+<span id="cb13-132"><a href="#cb13-132"></a>    .transform_filter(alt.datum.t <span class="op">==</span> t[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb13-133"><a href="#cb13-133"></a>)</span>
+<span id="cb13-134"><a href="#cb13-134"></a>linechart <span class="op">=</span> base.mark_line().encode(x<span class="op">=</span><span class="st">"t"</span>, y<span class="op">=</span><span class="st">"z"</span>, detail<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
+<span id="cb13-135"><a href="#cb13-135"></a></span>
+<span id="cb13-136"><a href="#cb13-136"></a>heatmap <span class="op">|</span> linechart</span>
+<span id="cb13-137"><a href="#cb13-137"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
