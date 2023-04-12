@@ -8,6 +8,9 @@ execute:
 
 
 ```{python}
+# | code-fold: true
+# | code-summary: "Import altair, numpy, pandas, and matplotlib. Disable altair's max row warning."
+# | output: false
 import altair as alt
 import numpy as np
 import pandas as pd

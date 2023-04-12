@@ -7,6 +7,8 @@ execute:
 
 
 ```{python}
+# | code-fold: true
+# | code-summary: "Import altair, numpy, pandas, and matplotlib."
 import altair as alt
 import numpy as np
 import pandas as pd
@@ -14,6 +16,7 @@ import matplotlib.pyplot as plt
 
 ```
 
+## A simple example
 Let us create some dummy data to play with. Assume that we are running som two-dimensional simulation. The outcome is a matrix that stores values for each of the spatial cells of our simulation.
 ```{python}
 x = np.linspace(0, 5, 20)
@@ -23,7 +26,11 @@ Z = np.sin(2 * X) + np.sqrt(Y)
 
 I'd claim that this is the natural way of plotting a matrix for most mathematicians.
 ```{python}
-plt.pcolormesh(X, Y, Z)
+# | label: fig-pcolormesh
+# | fig-cap: "Visualization of a matrix"
+fig, ax = plt.subplots()
+ax.pcolormesh(X, Y, Z)
+plt.show()
 ```
 
 Alternatively, you would do something like this in `matlab`.
@@ -67,6 +74,9 @@ alt.Chart(df).mark_rect(clip=True).encode(
     y2=alt.datum.y + delta,
 )
 ```
+
+## Extending the example to include time
+
 
 Now let's say that our data also had a time component.
 ```{python}

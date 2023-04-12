@@ -1,30 +1,59 @@
 # Altair for Mathematicians
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+## Introduction
 
+As a mathematician, you are no stranger to working with matrices and vectors to represent complex data sets. Traditionally, these methods have been the foundation of mathematical data representation and manipulation. However, there is a whole new world of visualization tools available that can enhance your understanding of data and help you gain new insights. In this article, we will explore the fundamental differences between traditional mathematical data encoding and data science-oriented methods, with a focus on the powerful Altair library.
 
+## Data Encoding: Mathematicians vs. Data Scientists
+
+In the realm of mathematics, data is often represented using matrices and vectors. This method is efficient for performing mathematical operations but can be limiting when it comes to visualizing and understanding the data. On the other hand, data scientists prefer using dataframes, which are essentially two-dimensional tables with labeled axes, as they offer a more intuitive way to represent and manipulate data. Dataframes are particularly useful for visualization purposes, as they make it easier to generate interactive plots that provide a deeper understanding of the data.
+
+## Why Altair is the Perfect Choice
+
+Altair is a declarative statistical visualization library built on top of the powerful Vega-Lite library. It provides a simple yet expressive syntax that allows you to create interactive, high-quality visualizations with just a few lines of code. Its compatibility with Python and Pandas makes it an ideal choice for mathematicians who are looking to explore new visualization techniques without leaving their comfort zone.
+
+## The Power of Interactive Visualizations
+
+Interactive visualizations provide a dynamic and engaging way to explore data, as they allow you to interact with the data points, zoom in on specific areas, and even filter the data on the fly. This interactivity can lead to the discovery of new patterns and relationships that might have otherwise gone unnoticed. With Altair, creating such visualizations is remarkably simple and intuitive.
+
+## A Tale of Two Representations: Numpy Matrix vs. Long Dataframe
+
+To illustrate the difference between a traditional mathematical representation and a dataframe, let's consider a small example. Suppose we have data for two variables, x and y, represented in a Numpy matrix:
 
 ```{python}
-x = 1
+import numpy as np
+
+data_matrix = np.array([[1, 2, 3], [4, 5, 6]])
+
+data_matrix
 ```
+Now, let's represent the same data as a long dataframe using Pandas:
 
-## A subsection maybe?
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+```{python}
+import pandas as pd
 
+data_dataframe = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
+data_dataframe
 
-```{mermaid}
-flowchart LR
-  A[Hard edge] --> B(Round edge)
-  B --> C{Decision}
-  C --> D[Result one]
-  C --> E[Result two]
 ```
+As you can see, the dataframe representation is more intuitive and easier to work with when it comes to visualization tasks.
 
-## we can do some tables too
-| Default | Left | Right | Center |
-|---------|:-----|------:|:------:|
-| 12      | 12   |    12 |   12   |
-| 123     | 123  |   123 |  123   |
-| 1       | 1    |     1 |   1    |
+Get Excited and Dive Deeper!
 
-: Demonstration of pipe table syntax
+We hope that this article has piqued your interest in the world of data visualization using Altair. By embracing this powerful library, you will unlock a new realm of possibilities, insights, and understanding that were previously inaccessible with traditional mathematical data encoding methods.
+
+
+::: {.callout-caution collapse="true"}
+
+## Everything above was written by GPT-4
+One day I am going to rewrite this myself. For now, I used the following prompt:
+
+> I am writing an interactive tutorial on `altair` for mathematicians. I want to highlight how mathematicians can profit from using `altair`. Usually, mathematicians use matrices and vectors represent their data. But by using dataframes, they can profit from the visualizations that `altair` can create.
+Write a multi-paragraph article including code snippets, that
+>
+> - highlights the fundamental difference in how data is encode (mathematician vs. data scientist),
+> - that `altair` is well suited for these visualizations,
+> - that interactive visualizations are insightful and allow to discover new things.
+> Include a small code example that shows how data is represented once in a numpy matrix for the classical mathematician and once as a long dataframe.
+Make this an inviting text that excited the reader to read more chapters.
+:::

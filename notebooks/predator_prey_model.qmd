@@ -10,8 +10,8 @@ execute:
 Import statements are hidden below.
 
 ```{python}
-# | slideshow: {slide_type: slide}
-# | tags: [hide-input]
+# | code-fold: true
+# | code-summary: "Import altair, numpy, pandas, and scipy."
 import altair as alt
 import numpy as np
 import pandas as pd
