@@ -34,7 +34,6 @@ format:
 
     theme:
       - cosmo
-      - custom.scss
     toc: true
     fontsize: 1.2em
     linestretch: 1.7
