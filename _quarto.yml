@@ -1,23 +1,11 @@
 project:
   type: website
   output-dir: docs
+
 date: last-modified
 
 execute:
   cache: false
-
-book:
-  title: "Altair for Mathematicians"
-  author: "Thomas Camminady"
-  description: How to use Altair as a Mathematician.
-  keyword: altair, pandas, python, mathematics
-  url: https://thomascamminady.github.io/altair_for_mathematicians/
-  sidebar:
-    search: true
-  repo-url: https://github.com/thomascamminady/altair_for_mathematicians
-  repo-branch: main
-  repo-actions: [edit, issue, source]
-  sharing: [twitter, facebook, linkedin]
 
 
 website:
@@ -26,16 +14,14 @@ website:
     search: true
     contents:
       - index.qmd
+      - section: "Matrices"
+        contents:
+          - notebooks/matrices.qmd
       - section: "Differential equations"
         contents:
-          - notebooks/1a_predator_prey_model.qmd
-          - notebooks/1b_van_der_pol.qmd
-  # navbar:
-  #   background: primary
-  #   search: true
-  #   left:
-  #     - text: "Altair for Mathematicians"
-  #       file: index.qmd
+          - notebooks/predator_prey_model.qmd
+          - notebooks/van_der_pol.qmd
+
 
 format:
   html:

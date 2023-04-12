@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-04-12">
 
-<title>index</title>
+<title>Data on two-dimensional grids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,22 +58,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -93,9 +93,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -109,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Altair for Mathematicians</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/matrices.html">Matrices</a></li><li class="breadcrumb-item"><a href="../notebooks/matrices.html">Data on two-dimensional grids</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,14 +128,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container">
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Altair for Mathematicians</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container">
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Differential equations</span></a>
+ <span class="menu-text">Matrices</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a>
@@ -146,13 +143,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
           <li class="sidebar-item">
   <div class="sidebar-item-container">
-  <a href="./notebooks/predator_prey_model.html" class="sidebar-item-text sidebar-link">
+  <a href="../notebooks/matrices.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Data on two-dimensional grids</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Differential equations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a>
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../notebooks/predator_prey_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Predator prey model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container">
-  <a href="./notebooks/van_der_pol.html" class="sidebar-item-text sidebar-link">
+  <a href="../notebooks/van_der_pol.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Van der Pol oscillator</span></a>
   </div>
 </li>
@@ -164,21 +178,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
 
-  <ul>
-  <li><a href="#a-subsection-maybe" id="toc-a-subsection-maybe" class="nav-link active" data-scroll-target="#a-subsection-maybe">A subsection maybe?</a></li>
-  <li><a href="#we-can-do-some-tables-too" id="toc-we-can-do-some-tables-too" class="nav-link" data-scroll-target="#we-can-do-some-tables-too">we can do some tables too</a></li>
-  </ul>
-</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Altair for Mathematicians</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Data on two-dimensional grids</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -199,66 +206,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>x <span class="op">=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="a-subsection-maybe" class="level2">
-<h2 class="anchored" data-anchor-id="a-subsection-maybe">A subsection maybe?</h2>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  A[Hard edge] --&gt; B(Round edge)
-  B --&gt; C{Decision}
-  C --&gt; D[Result one]
-  C --&gt; E[Result two]
-</pre>
+<p>Let us create some dummy data to play with. Assume that we are running som two-dimensional simulation. The outcome is a matrix that stores values for each of the spatial cells of our simulation.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>X, Y <span class="op">=</span> np.meshgrid(x, x)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>Z <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> X) <span class="op">+</span> np.sqrt(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I’d claim that this is the natural way of plotting a matrix for most mathematicians.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb3-2"><a href="#cb3-2"></a>ax.pcolormesh(X, Y, Z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x11faf76a0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="matrices_files/figure-html/cell-4-output-2.png" width="558" height="411"></p>
 </div>
 </div>
+<p>Alternatively, you would do something like this in <code>matlab</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource {matlab} number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>imagesc(Z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It makes sens to think of the matrix in the way that it is used by <code>matplotlib</code> for plotting. A matrix is a two dimensional object that looks like this</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">print</span>(Z[:<span class="dv">4</span>, :<span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0.         0.50235115 0.86872962 0.99996678]
+ [0.51298918 1.01534033 1.38171879 1.51295596]
+ [0.72547625 1.2278274  1.59420587 1.72544303]
+ [0.88852332 1.39087447 1.75725293 1.8884901 ]]</code></pre>
 </div>
 </div>
-</section>
-<section id="we-can-do-some-tables-too" class="level2">
-<h2 class="anchored" data-anchor-id="we-can-do-some-tables-too">we can do some tables too</h2>
-<table class="table">
-<caption>Demonstration of pipe table syntax</caption>
-<thead>
-<tr class="header">
-<th>Default</th>
-<th style="text-align: left;">Left</th>
-<th style="text-align: right;">Right</th>
-<th style="text-align: center;">Center</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>12</td>
-<td style="text-align: left;">12</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr class="even">
-<td>123</td>
-<td style="text-align: left;">123</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: center;">123</td>
-</tr>
-<tr class="odd">
-<td>1</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: center;">1</td>
-</tr>
-</tbody>
-</table>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -545,36 +531,44 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu"># Altair for Mathematicians</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="in">```{python}</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>x <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="in">```</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="fu">## A subsection maybe?</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="in">```{mermaid}</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a>flowchart LR</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  A[Hard edge] --&gt; B(Round edge)</span>
-<span id="cb2-22"><a href="#cb2-22"></a>  B --&gt; C{Decision}</span>
-<span id="cb2-23"><a href="#cb2-23"></a>  C --&gt; D[Result one]</span>
-<span id="cb2-24"><a href="#cb2-24"></a>  C --&gt; E[Result two]</span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="in">```</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="fu">## we can do some tables too</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a>| Default | Left | Right | Center |</span>
-<span id="cb2-29"><a href="#cb2-29"></a>|---------|:-----|------:|:------:|</span>
-<span id="cb2-30"><a href="#cb2-30"></a>| 12      | 12   |    12 |   12   |</span>
-<span id="cb2-31"><a href="#cb2-31"></a>| 123     | 123  |   123 |  123   |</span>
-<span id="cb2-32"><a href="#cb2-32"></a>| 1       | 1    |     1 |   1    |</span>
-<span id="cb2-33"><a href="#cb2-33"></a></span>
-<span id="cb2-34"><a href="#cb2-34"></a>: Demonstration of pipe table syntax</span>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="an">title:</span><span class="co"> Data on two-dimensional grids</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="an">execute:</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">  enabled: true</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">---</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="in">```{python}</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="in">```</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a>Let us create some dummy data to play with. Assume that we are running som two-dimensional simulation. The outcome is a matrix that stores values for each of the spatial cells of our simulation.</span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="in">```{python}</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
+<span id="cb8-24"><a href="#cb8-24"></a>X, Y <span class="op">=</span> np.meshgrid(x, x)</span>
+<span id="cb8-25"><a href="#cb8-25"></a>Z <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> X) <span class="op">+</span> np.sqrt(Y)</span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="in">```</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a></span>
+<span id="cb8-28"><a href="#cb8-28"></a>I'd claim that this is the natural way of plotting a matrix for most mathematicians.</span>
+<span id="cb8-31"><a href="#cb8-31"></a><span class="in">```{python}</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb8-33"><a href="#cb8-33"></a>ax.pcolormesh(X, Y, Z)</span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="in">```</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a></span>
+<span id="cb8-36"><a href="#cb8-36"></a>Alternatively, you would do something like this in <span class="in">`matlab`</span>.</span>
+<span id="cb8-39"><a href="#cb8-39"></a><span class="in">```{matlab}</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a><span class="va">imagesc</span>(<span class="va">Z</span>)</span>
+<span id="cb8-41"><a href="#cb8-41"></a><span class="in">```</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a></span>
+<span id="cb8-43"><a href="#cb8-43"></a>It makes sens to think of the matrix in the way that it is used by <span class="in">`matplotlib`</span> for plotting. A matrix is a two dimensional object that looks like this</span>
+<span id="cb8-46"><a href="#cb8-46"></a><span class="in">```{python}</span></span>
+<span id="cb8-47"><a href="#cb8-47"></a><span class="bu">print</span>(Z[:<span class="dv">4</span>, :<span class="dv">4</span>])</span>
+<span id="cb8-48"><a href="#cb8-48"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

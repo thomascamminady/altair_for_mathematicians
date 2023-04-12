@@ -21,52 +21,59 @@
     "text": "we can do some tables too\n\nDemonstration of pipe table syntax\n\n\nDefault\nLeft\nRight\nCenter\n\n\n\n\n12\n12\n12\n12\n\n\n123\n123\n123\n123\n\n\n1\n1\n1\n1"
   },
   {
-    "objectID": "notebooks/1a_predator_prey_model.html",
-    "href": "notebooks/1a_predator_prey_model.html",
+    "objectID": "notebooks/predator_prey_model.html",
+    "href": "notebooks/predator_prey_model.html",
     "title": "Predator prey model",
     "section": "",
     "text": "Import statements are hidden below.\nimport altair as alt\nimport numpy as np\nimport pandas as pd\nimport scipy"
   },
   {
-    "objectID": "notebooks/1a_predator_prey_model.html#model",
-    "href": "notebooks/1a_predator_prey_model.html#model",
+    "objectID": "notebooks/predator_prey_model.html#model",
+    "href": "notebooks/predator_prey_model.html#model",
     "title": "Predator prey model",
     "section": "Model",
     "text": "Model\nLet’s start with one of the simples models for dynamical systems, the predator-prey model. Here, the population of the prey (\\(x\\)) and the predator (\\(y\\)) follow the following differential equation:\n\\[\n\\begin{aligned}\n    \\frac{dx}{dt} &= \\alpha x - \\beta x  y \\\\\n    \\frac{dy}{dt} &= \\delta x  y - \\gamma y\n\\end{aligned}\n\\]\nThe constants \\(\\alpha\\), \\(\\beta\\), \\(\\gamma\\), and \\(\\delta\\) describe the population gain and loss. Implementing this in code with some default parameters, we get the following two functions. Note that the second function is just a wrapper that can be used by the integrator later on.\n\ndef predator_prey_model(predator, prey):\n    alpha, beta, gamma, delta = 1.0, 0.5, 2.0, 0.6\n    return (\n        alpha * prey - beta * prey * predator,\n        delta * prey * predator - gamma * predator,\n    )\n\n\ndef predator_prey_ode_wrapper(y, t):\n    return predator_prey_model(y[1], y[0])"
   },
   {
-    "objectID": "notebooks/1a_predator_prey_model.html#solving-the-differential-equation",
-    "href": "notebooks/1a_predator_prey_model.html#solving-the-differential-equation",
+    "objectID": "notebooks/predator_prey_model.html#solving-the-differential-equation",
+    "href": "notebooks/predator_prey_model.html#solving-the-differential-equation",
     "title": "Predator prey model",
     "section": "Solving the differential equation",
     "text": "Solving the differential equation\nWe use scipy to solve the differential equation over a certain time interval t. Our integrator requires an initial population of predators and prey. Here, we solve the differential equation four times, each time with different initial conditions. The resulting data is aggregated into a pd.DataFrame and each simulation run gets its own unique ID.\n\nt = np.arange(0, 5, step=0.01)\nsource_list = []\nfor id, y0 in enumerate([[10, 10], [5, 10], [10, 5], [5, 5]]):\n    predator_prey = scipy.integrate.odeint(predator_prey_ode_wrapper, y0=y0, t=t)\n    source_list.append(\n        pd.DataFrame(\n            {\n                \"Time\": t,\n                \"Prey\": predator_prey[:, 0],\n                \"Predator\": predator_prey[:, 1],\n                \"ID\": id,\n            }\n        )\n    )\nsource = pd.concat(source_list)\n\nIn addition to solving the differential equation, we also want to visualize the vector field. In this case, the vector field tells us at every point in phase-space, what the change in population is for the predators and the prey.\n\nprey = np.arange(source[\"Prey\"].max())\npredator = np.arange(source[\"Predator\"].max())\npredator, prey = np.meshgrid(predator, prey)\npredator, prey = predator.flatten(), prey.flatten()\ndPrey, dPredator = predator_prey_model(predator, prey)\n\nWe also store this data inside a pd.DataFrame.\n\nsource_vector_field = pd.DataFrame(\n    {\n        \"Predator\": predator,\n        \"Prey\": prey,\n        \"Angle\": np.arctan2(dPredator, dPrey),\n        \"Population Change\": dPrey + dPredator,\n    }\n)"
   },
   {
-    "objectID": "notebooks/1a_predator_prey_model.html#visualization",
-    "href": "notebooks/1a_predator_prey_model.html#visualization",
+    "objectID": "notebooks/predator_prey_model.html#visualization",
+    "href": "notebooks/predator_prey_model.html#visualization",
     "title": "Predator prey model",
     "section": "Visualization",
     "text": "Visualization\nNow we visualize the data. We will create two plots, one showing the phase-space with the vector field, and one showing the evolution of the populations over time. The phase-space diagram and the time series are using the same data so we can create a base chart that contains all the common content. We also add a selection that allows us to highlight different runs of our simulation later on. We use detail as a way to tell our altair plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.\n\nselection = alt.selection_point(fields=[\"ID\"], on=\"mouseover\", toggle=True)\nbase = (\n    alt.Chart(source)\n    .mark_line()\n    .encode(\n        detail=\"ID\",\n        opacity=alt.condition(selection, alt.value(1), alt.value(0.1)),\n    )\n    .add_params(selection)\n    .properties(width=500, height=300)\n)\n\nWith this base chart, we create the time series and the phase-space diagram next. For the time series, we have to transform our wide pd.DataFrame into a long pd.DataFrame using transform_fold.\n\nchart_time_series = (\n    base.transform_fold([\"Predator\", \"Prey\"], [\"Species\", \"Population\"])\n    .encode(\n        x=\"Time:Q\",\n        y=\"Population:Q\",\n        color=\"Species:N\",\n    )\n    .properties(title=\"Time series\")\n)\nchart_phase_space = base.encode(\n    x=alt.X(\"Predator:Q\", sort=None),\n    y=alt.Y(\"Prey:Q\"),\n    color=alt.value(\"black\"),\n).properties(title=\"Phase space\")\n\nNext we create the vector field using the wedge shape. Each arrow in phase-space points at an angle that represents the change in the populations.\n\nchart_vector_field = (\n    alt.Chart(source_vector_field)\n    .mark_point(shape=\"wedge\", filled=True, size=500)\n    .encode(\n        x=alt.X(\"Predator:Q\", sort=None),\n        y=alt.Y(\"Prey:Q\"),\n        angle=alt.Angle(\n            \"Angle\", scale=alt.Scale(domain=[-np.pi, np.pi], range=[-180, 180])\n        ),\n        color=alt.Color(\"Population Change:Q\"),\n    )\n)\n\nAt last, we combine our plots to get the final result. Try to hover over some of the lines and you will see the runs of our simulations being highlighted in both charts.\n\nchart_time_series & chart_vector_field + chart_phase_space"
   },
   {
-    "objectID": "notebooks/1b_van_der_pol.html",
-    "href": "notebooks/1b_van_der_pol.html",
+    "objectID": "notebooks/van_der_pol.html",
+    "href": "notebooks/van_der_pol.html",
     "title": "Van der Pol oscillator",
     "section": "",
     "text": "import altair as alt\nimport numpy as np\nimport pandas as pd\nimport scipy\n\nalt.data_transformers.disable_max_rows()\n\nDataTransformerRegistry.enable('default')\nTo be honest, I don’t know much about the Van der Pol oscillator, I only needed another simple differential equation that has a parameter.\ndef ode(y, t, mu=1.0):\n    return np.array(\n        [\n            y[1],\n            mu * (1 - y[0] ** 2) * y[1] - y[0],\n        ]\n    )"
   },
   {
-    "objectID": "notebooks/1b_van_der_pol.html#simple-example",
-    "href": "notebooks/1b_van_der_pol.html#simple-example",
+    "objectID": "notebooks/van_der_pol.html#simple-example",
+    "href": "notebooks/van_der_pol.html#simple-example",
     "title": "Van der Pol oscillator",
     "section": "Simple example",
     "text": "Simple example\nLet’s start with a simple example. We fix a parameter of \\(\\mu\\) and some initial values. We then solve the differential equation and store the data inside a pd.DataFrame.\n\ndef explicit_euler(y0, t, ode, args):\n    y = np.array([y0])\n    for i in range(1, len(t)):\n        yi = y[-1] + (t[i] - t[i - 1]) * ode(y[-1], (t[i] - t[i - 1]), args)\n        y = np.vstack([y, yi])\n    return y\n\n\nt = np.arange(0, 20, step=0.01)\ny = explicit_euler([10, 10], t, ode, 0.2)\ndf = pd.DataFrame({\"Time\": t, \"y0\": y[:, 0], \"y1\": y[:, 1]})\n\nNext we can again plot the solution phase-space, as well as in time.\n\nbase = alt.Chart(df).mark_line(clip=True).properties(width=500, height=300)\n\n\nchart_timeseries = base.transform_fold([\"y0\", \"y1\"], [\"Variable\", \"Value\"]).encode(\n    x=alt.X(\"Time\", scale=alt.Scale(zero=False)),\n    y=alt.Y(\"Value:Q\", scale=alt.Scale(zero=False)),\n    color=alt.Color(\"Variable:N\", scale=alt.Scale(scheme=\"tableau10\")),\n)\n\nchart_phasespace = base.encode(\n    x=alt.X(\"y0:Q\", scale=alt.Scale(zero=False), sort=None),\n    y=alt.Y(\"y1:Q\", scale=alt.Scale(zero=False)),\n)\n\n\n(chart_phasespace & chart_timeseries).properties(title=\"Hopf bifurcation\")"
   },
   {
-    "objectID": "notebooks/1b_van_der_pol.html#an-example-with-uncertainty",
-    "href": "notebooks/1b_van_der_pol.html#an-example-with-uncertainty",
+    "objectID": "notebooks/van_der_pol.html#an-example-with-uncertainty",
+    "href": "notebooks/van_der_pol.html#an-example-with-uncertainty",
     "title": "Van der Pol oscillator",
     "section": "An example with uncertainty",
     "text": "An example with uncertainty\nNext, we want to introduce some uncertainty into our system. Assume that we do not know the parameters of our system exactly. Instead we run a couple of simulations, each with it’s own parameter \\(\\mu\\) that is sampled from some distribution.\nWe can easily create this data by solving the ODE repeatedly and keeping track of the parameter that was used.\n\ndf = pd.DataFrame()\nfor sample in range(10):\n    sigma = 0.1\n    mu = sigma * np.random.randn()\n    t = np.arange(0, 20, step=0.1)\n    y = scipy.integrate.odeint(ode, y0=[1, 1], t=t, args=(mu,))\n\n    df = pd.concat(\n        [\n            df,\n            pd.DataFrame({\"Time\": t, \"y0\": y[:, 0], \"y1\": y[:, 1], \"mu\": mu}),\n        ]\n    )\n\nWe again create a couple of charts, one for the phase-space, one plotting the solution against time, and one averaging the data that we created. The last chart will show the mean of the solution together with the confidence interval.\n\nselection = alt.selection_point(fields=[\"mu\"], on=\"mouseover\", toggle=True)\n\nbase = (\n    alt.Chart(df)\n    .mark_line(clip=True, strokeWidth=3)\n    .add_params(selection)\n    .properties(width=500, height=200)\n)\n\nbase_nonavg = base.encode(\n    tooltip=list(df),\n    detail=alt.Detail(\"mu:N\"),\n    opacity=alt.condition(selection, alt.value(1.0), alt.value(0.1)),\n)\n\nbase_avg = base.transform_fold([\"y0\", \"y1\"], [\"Variable\", \"Value\"]).encode(\n    x=alt.X(\"Time:Q\", scale=alt.Scale(zero=False)),\n    color=alt.Color(\"Variable:N\", scale=alt.Scale(scheme=\"tableau10\")),\n)\n\nchart_timeseries = base_nonavg.transform_fold(\n    [\"y0\", \"y1\"], [\"Variable\", \"Value\"]\n).encode(\n    x=alt.X(\"Time:Q\", scale=alt.Scale(zero=False)),\n    y=alt.Y(\"Value:Q\", scale=alt.Scale(zero=False)),\n    color=alt.Color(\"Variable:N\", scale=alt.Scale(scheme=\"tableau10\")),\n)\n\nchart_phasespace = base_nonavg.encode(\n    x=alt.X(\"y0:Q\", scale=alt.Scale(zero=False), sort=None),\n    y=alt.Y(\"y1:Q\", scale=alt.Scale(zero=False)),\n    color=alt.Color(\"mu:Q\", scale=alt.Scale(scheme=\"purpleorange\")),\n)\n\n\nband = base_avg.mark_errorband(extent=\"ci\", borders=False).encode(\n    y=alt.Y(\"Value:Q\", scale=alt.Scale(zero=False))\n)\nlines = base_avg.encode(y=alt.Y(\"mean(Value):Q\", scale=alt.Scale(zero=False)))\n\nPutting all charts together, we see the following interactive chart.\n\n(chart_phasespace & chart_timeseries & (band + lines)).properties(\n    # title=alt.Title(\"Van der Pol oscillator\", dy=-20)\n)"
+  },
+  {
+    "objectID": "notebooks/matrices.html",
+    "href": "notebooks/matrices.html",
+    "title": "Data on two-dimensional grids",
+    "section": "",
+    "text": "import altair as alt\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\nLet us create some dummy data to play with. Assume that we are running som two-dimensional simulation. The outcome is a matrix that stores values for each of the spatial cells of our simulation.\n\nx = np.linspace(0, 5, 20)\nX, Y = np.meshgrid(x, x)\nZ = np.sin(2 * X) + np.sqrt(Y)\n\nI’d claim that this is the natural way of plotting a matrix for most mathematicians.\n\nfig, ax = plt.subplots()\nax.pcolormesh(X, Y, Z)\n\n&lt;matplotlib.collections.QuadMesh at 0x11faf76a0&gt;\n\n\n\n\n\nAlternatively, you would do something like this in matlab.\nimagesc(Z)\nIt makes sens to think of the matrix in the way that it is used by matplotlib for plotting. A matrix is a two dimensional object that looks like this\n\nprint(Z[:4, :4])\n\n[[0.         0.50235115 0.86872962 0.99996678]\n [0.51298918 1.01534033 1.38171879 1.51295596]\n [0.72547625 1.2278274  1.59420587 1.72544303]\n [0.88852332 1.39087447 1.75725293 1.8884901 ]]"
   }
 ]

@@ -1,0 +1,71 @@
+---
+title: Data on two-dimensional grids
+jupyter: python3
+execute:
+  enabled: true
+---
+
+
+```{python}
+import altair as alt
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+```
+
+Let us create some dummy data to play with. Assume that we are running som two-dimensional simulation. The outcome is a matrix that stores values for each of the spatial cells of our simulation.
+```{python}
+x = np.linspace(0, 5, 20)
+X, Y = np.meshgrid(x, x)
+Z = np.sin(2 * X) + np.sqrt(Y)
+```
+
+I'd claim that this is the natural way of plotting a matrix for most mathematicians.
+```{python}
+fig, ax = plt.subplots()
+ax.pcolormesh(X, Y, Z)
+```
+
+Alternatively, you would do something like this in `matlab`.
+```{matlab}
+imagesc(Z)
+```
+
+It makes sens to think of the matrix in the way that it is used by `matplotlib` for plotting. A matrix is a two dimensional object that looks like this (when printing the first four columns in the first four rows).
+```{python}
+print(Z[:4, :4])
+```
+
+To use `altair`, we need to convert this matrix into a dataframe that looks slightly different.
+Instead of storing the columns of the matrix as columns of the dataframe, we convert the matrix
+into a *long* dataframe like this.
+```{python}
+i, j = np.indices(Z.shape)
+delta = x[1] - x[0]
+df = pd.DataFrame(
+    {
+        "i": i.flatten(),
+        "y": Y.flatten(),
+        "y2": Y.flatten() + delta,
+        "j": j.flatten(),
+        "x": X.flatten(),
+        "x2": X.flatten() + delta,
+        "z": Z.flatten(),
+    }
+)
+df.head(10)
+
+```
+
+Now we can visualize the data using `altair`.
+
+```{python}
+alt.Chart(df).mark_rect(clip=True).encode(
+    x=alt.X("x", scale=alt.Scale(domain=(0, 5)), title="x"),
+    x2=alt.X2("x2"),
+    y=alt.Y("y", scale=alt.Scale(domain=(0, 5)), title="y"),
+    y2=alt.Y2("y2"),
+    color=alt.Color("z:Q", scale=alt.Scale(scheme="viridis")),
+)
+```
