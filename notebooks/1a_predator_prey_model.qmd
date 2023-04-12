@@ -1,6 +1,8 @@
 ---
 title: Predator prey model
 jupyter: python3
+execute:
+  enabled: true
 ---
 
 
@@ -108,15 +110,15 @@ us to highlight different runs of our simulation later on.
 We use `detail` as a way to tell our `altair` plot that we want separate lines for data that otherwise does not differ in any of the parameters that we are using for the visualization.
 
 ```{python}
-# selection = alt.selection_point(fields=["ID"], on="mouseover", toggle=True)
+selection = alt.selection_point(fields=["ID"], on="mouseover", toggle=True)
 base = (
     alt.Chart(source)
     .mark_line()
     .encode(
         detail="ID",
-        # opacity=alt.condition(selection, alt.value(1), alt.value(0.1)),
+        opacity=alt.condition(selection, alt.value(1), alt.value(0.1)),
     )
-    # .add_params(selection)
+    .add_params(selection)
     .properties(width=500, height=300)
 )
 ```

@@ -1,6 +1,8 @@
 ---
 title: Van der Pol oscillator
 jupyter: python3
+execute:
+  enabled: true
 ---
 
 
@@ -12,6 +14,8 @@ import pandas as pd
 import scipy
 
 alt.data_transformers.disable_max_rows()
+
+
 ```
 
 To be honest, I don't know much about the [Van der Pol oscillator](https://en.wikipedia.org/wiki/Van_der_Pol_oscillator), I only needed another simple differential equation that has a parameter.
@@ -24,6 +28,8 @@ def ode(y, t, mu=1.0):
             mu * (1 - y[0] ** 2) * y[1] - y[0],
         ]
     )
+
+
 ```
 
 ## Simple example
@@ -92,18 +98,19 @@ We again create a couple of charts, one for the phase-space, one plotting the so
 averaging the data that we created. The last chart will show the mean of the solution together with the confidence interval.
 
 ```{python}
-# selection = alt.selection_point(fields=["mu"], on="mouseover", toggle=True)
+selection = alt.selection_point(fields=["mu"], on="mouseover", toggle=True)
 
 base = (
-    alt.Chart(df).mark_line(clip=True, strokeWidth=3)
-    # .add_params(selection)
+    alt.Chart(df)
+    .mark_line(clip=True, strokeWidth=3)
+    .add_params(selection)
     .properties(width=500, height=200)
 )
 
 base_nonavg = base.encode(
     tooltip=list(df),
     detail=alt.Detail("mu:N"),
-    # opacity=alt.condition(selection, alt.value(1.0), alt.value(0.1)),
+    opacity=alt.condition(selection, alt.value(1.0), alt.value(0.1)),
 )
 
 base_avg = base.transform_fold(["y0", "y1"], ["Variable", "Value"]).encode(

@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  cache: false
+
 book:
   title: "Altair for Mathematicians"
   author: "Thomas Camminady"
