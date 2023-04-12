@@ -47,10 +47,8 @@ df = pd.DataFrame(
     {
         "i": i.flatten(),
         "y": Y.flatten(),
-        "y2": Y.flatten() + delta,
         "j": j.flatten(),
         "x": X.flatten(),
-        "x2": X.flatten() + delta,
         "z": Z.flatten(),
     }
 )
@@ -67,5 +65,8 @@ alt.Chart(df).mark_rect(clip=True).encode(
     y=alt.Y("y", scale=alt.Scale(domain=(0, 5)), title="y"),
     y2=alt.Y2("y2"),
     color=alt.Color("z:Q", scale=alt.Scale(scheme="viridis")),
+).transform_calculate(
+    x2=alt.datum.x + delta,
+    y2=alt.datum.y + delta,
 )
 ```
