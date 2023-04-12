@@ -223,10 +223,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>I’d claim that this is the natural way of plotting a matrix for most mathematicians.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb3-2"><a href="#cb3-2"></a>ax.pcolormesh(X, Y, Z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>plt.pcolormesh(X, Y, Z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;matplotlib.collections.QuadMesh at 0x127d2b2b0&gt;</code></pre>
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x139980430&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="matrices_files/figure-html/cell-4-output-2.png" width="558" height="411"></p>
@@ -352,13 +351,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-11"><a href="#cb10-11"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 
-<div id="altair-viz-6a99eee0392f4755b76d0094346f6faa"></div>
+<div id="altair-viz-4a85aa8944bc46039faf6004f6476b76"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6a99eee0392f4755b76d0094346f6faa") {
-      outputDiv = document.getElementById("altair-viz-6a99eee0392f4755b76d0094346f6faa");
+    if (outputDiv.id !== "altair-viz-4a85aa8944bc46039faf6004f6476b76") {
+      outputDiv = document.getElementById("altair-viz-4a85aa8944bc46039faf6004f6476b76");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -453,13 +452,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-25"><a href="#cb12-25"></a>heatmap <span class="op">|</span> linechart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 
-<div id="altair-viz-04a286de2fce453c8ef93925bcb51df3"></div>
+<div id="altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-04a286de2fce453c8ef93925bcb51df3") {
-      outputDiv = document.getElementById("altair-viz-04a286de2fce453c8ef93925bcb51df3");
+    if (outputDiv.id !== "altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255") {
+      outputDiv = document.getElementById("altair-viz-0dab8b55e8db4d35b6b1f4b0316ff255");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -824,98 +823,97 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-27"><a href="#cb13-27"></a></span>
 <span id="cb13-28"><a href="#cb13-28"></a>I'd claim that this is the natural way of plotting a matrix for most mathematicians.</span>
 <span id="cb13-31"><a href="#cb13-31"></a><span class="in">```{python}</span></span>
-<span id="cb13-32"><a href="#cb13-32"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb13-33"><a href="#cb13-33"></a>ax.pcolormesh(X, Y, Z)</span>
-<span id="cb13-34"><a href="#cb13-34"></a><span class="in">```</span></span>
-<span id="cb13-35"><a href="#cb13-35"></a></span>
-<span id="cb13-36"><a href="#cb13-36"></a>Alternatively, you would do something like this in <span class="in">`matlab`</span>.</span>
-<span id="cb13-39"><a href="#cb13-39"></a><span class="in">```{matlab}</span></span>
-<span id="cb13-40"><a href="#cb13-40"></a><span class="va">imagesc</span>(<span class="va">Z</span>)</span>
-<span id="cb13-41"><a href="#cb13-41"></a><span class="in">```</span></span>
-<span id="cb13-42"><a href="#cb13-42"></a></span>
-<span id="cb13-43"><a href="#cb13-43"></a>It makes sens to think of the matrix in the way that it is used by <span class="in">`matplotlib`</span> for plotting. A matrix is a two dimensional object that looks like this (when printing the first four columns in the first four rows).</span>
-<span id="cb13-46"><a href="#cb13-46"></a><span class="in">```{python}</span></span>
-<span id="cb13-47"><a href="#cb13-47"></a><span class="bu">print</span>(Z[:<span class="dv">4</span>, :<span class="dv">4</span>])</span>
-<span id="cb13-48"><a href="#cb13-48"></a><span class="in">```</span></span>
-<span id="cb13-49"><a href="#cb13-49"></a></span>
-<span id="cb13-50"><a href="#cb13-50"></a>To use <span class="in">`altair`</span>, we need to convert this matrix into a dataframe that looks slightly different.</span>
-<span id="cb13-51"><a href="#cb13-51"></a>Instead of storing the columns of the matrix as columns of the dataframe, we convert the matrix</span>
-<span id="cb13-52"><a href="#cb13-52"></a>into a *long* dataframe like this.</span>
-<span id="cb13-55"><a href="#cb13-55"></a><span class="in">```{python}</span></span>
-<span id="cb13-56"><a href="#cb13-56"></a>df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb13-57"><a href="#cb13-57"></a>    {</span>
-<span id="cb13-58"><a href="#cb13-58"></a>        <span class="st">"y"</span>: Y.flatten(),</span>
-<span id="cb13-59"><a href="#cb13-59"></a>        <span class="st">"x"</span>: X.flatten(),</span>
-<span id="cb13-60"><a href="#cb13-60"></a>        <span class="st">"z"</span>: Z.flatten(),</span>
-<span id="cb13-61"><a href="#cb13-61"></a>    }</span>
-<span id="cb13-62"><a href="#cb13-62"></a>)</span>
-<span id="cb13-63"><a href="#cb13-63"></a><span class="in">```</span></span>
-<span id="cb13-64"><a href="#cb13-64"></a>Here are the first ten rows of the dataframe.</span>
-<span id="cb13-67"><a href="#cb13-67"></a><span class="in">```{python}</span></span>
-<span id="cb13-68"><a href="#cb13-68"></a>df.head(<span class="dv">10</span>)</span>
-<span id="cb13-69"><a href="#cb13-69"></a><span class="in">```</span></span>
-<span id="cb13-70"><a href="#cb13-70"></a>Now we can visualize the data using <span class="in">`altair`</span>. However, we need to compute <span class="in">`x2`</span> and <span class="in">`y2`</span> to tell <span class="in">`altair`</span> the extend of every rectangle. We can use <span class="in">`transform_calculate`</span> for that.</span>
-<span id="cb13-71"><a href="#cb13-71"></a></span>
-<span id="cb13-74"><a href="#cb13-74"></a><span class="in">```{python}</span></span>
-<span id="cb13-75"><a href="#cb13-75"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
-<span id="cb13-76"><a href="#cb13-76"></a>alt.Chart(df).mark_rect(clip<span class="op">=</span><span class="va">True</span>).encode(</span>
-<span id="cb13-77"><a href="#cb13-77"></a>    x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
-<span id="cb13-78"><a href="#cb13-78"></a>    x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
-<span id="cb13-79"><a href="#cb13-79"></a>    y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
-<span id="cb13-80"><a href="#cb13-80"></a>    y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
-<span id="cb13-81"><a href="#cb13-81"></a>    color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
-<span id="cb13-82"><a href="#cb13-82"></a>).transform_calculate(</span>
-<span id="cb13-83"><a href="#cb13-83"></a>    x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
-<span id="cb13-84"><a href="#cb13-84"></a>    y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
-<span id="cb13-85"><a href="#cb13-85"></a>)</span>
-<span id="cb13-86"><a href="#cb13-86"></a><span class="in">```</span></span>
-<span id="cb13-87"><a href="#cb13-87"></a></span>
-<span id="cb13-88"><a href="#cb13-88"></a>Now let's say that our data also had a time component.</span>
-<span id="cb13-91"><a href="#cb13-91"></a><span class="in">```{python}</span></span>
-<span id="cb13-92"><a href="#cb13-92"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
-<span id="cb13-93"><a href="#cb13-93"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span>
-<span id="cb13-94"><a href="#cb13-94"></a>X, Y, T <span class="op">=</span> np.meshgrid(x, x, t)</span>
-<span id="cb13-95"><a href="#cb13-95"></a>Z <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> X <span class="op">+</span> T) <span class="op">+</span> np.sqrt(Y)</span>
-<span id="cb13-96"><a href="#cb13-96"></a></span>
-<span id="cb13-97"><a href="#cb13-97"></a>df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb13-98"><a href="#cb13-98"></a>    {</span>
-<span id="cb13-99"><a href="#cb13-99"></a>        <span class="st">"t"</span>: T.flatten(),</span>
-<span id="cb13-100"><a href="#cb13-100"></a>        <span class="st">"y"</span>: Y.flatten(),</span>
-<span id="cb13-101"><a href="#cb13-101"></a>        <span class="st">"x"</span>: X.flatten(),</span>
-<span id="cb13-102"><a href="#cb13-102"></a>        <span class="st">"z"</span>: Z.flatten(),</span>
-<span id="cb13-103"><a href="#cb13-103"></a>    }</span>
-<span id="cb13-104"><a href="#cb13-104"></a>)</span>
-<span id="cb13-105"><a href="#cb13-105"></a><span class="in">```</span></span>
-<span id="cb13-106"><a href="#cb13-106"></a></span>
-<span id="cb13-107"><a href="#cb13-107"></a>In addition to visualizing the heatmap, we can display the evolution of each cell over time.</span>
-<span id="cb13-108"><a href="#cb13-108"></a></span>
-<span id="cb13-111"><a href="#cb13-111"></a><span class="in">```{python}</span></span>
-<span id="cb13-112"><a href="#cb13-112"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
-<span id="cb13-113"><a href="#cb13-113"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
-<span id="cb13-114"><a href="#cb13-114"></a>base <span class="op">=</span> (</span>
-<span id="cb13-115"><a href="#cb13-115"></a>    alt.Chart(df)</span>
-<span id="cb13-116"><a href="#cb13-116"></a>    .encode(opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="fl">1.0</span>), alt.value(<span class="fl">0.2</span>)))</span>
-<span id="cb13-117"><a href="#cb13-117"></a>    .add_params(selection)</span>
-<span id="cb13-118"><a href="#cb13-118"></a>)</span>
-<span id="cb13-119"><a href="#cb13-119"></a>heatmap <span class="op">=</span> (</span>
-<span id="cb13-120"><a href="#cb13-120"></a>    base.mark_rect(clip<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-121"><a href="#cb13-121"></a>    .encode(</span>
-<span id="cb13-122"><a href="#cb13-122"></a>        x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
-<span id="cb13-123"><a href="#cb13-123"></a>        x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
-<span id="cb13-124"><a href="#cb13-124"></a>        y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
-<span id="cb13-125"><a href="#cb13-125"></a>        y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
-<span id="cb13-126"><a href="#cb13-126"></a>        color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
-<span id="cb13-127"><a href="#cb13-127"></a>    )</span>
-<span id="cb13-128"><a href="#cb13-128"></a>    .transform_calculate(</span>
-<span id="cb13-129"><a href="#cb13-129"></a>        x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
-<span id="cb13-130"><a href="#cb13-130"></a>        y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
-<span id="cb13-131"><a href="#cb13-131"></a>    )</span>
-<span id="cb13-132"><a href="#cb13-132"></a>    .transform_filter(alt.datum.t <span class="op">==</span> t[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb13-133"><a href="#cb13-133"></a>)</span>
-<span id="cb13-134"><a href="#cb13-134"></a>linechart <span class="op">=</span> base.mark_line().encode(x<span class="op">=</span><span class="st">"t"</span>, y<span class="op">=</span><span class="st">"z"</span>, detail<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
-<span id="cb13-135"><a href="#cb13-135"></a></span>
-<span id="cb13-136"><a href="#cb13-136"></a>heatmap <span class="op">|</span> linechart</span>
-<span id="cb13-137"><a href="#cb13-137"></a><span class="in">```</span></span>
+<span id="cb13-32"><a href="#cb13-32"></a>plt.pcolormesh(X, Y, Z)</span>
+<span id="cb13-33"><a href="#cb13-33"></a><span class="in">```</span></span>
+<span id="cb13-34"><a href="#cb13-34"></a></span>
+<span id="cb13-35"><a href="#cb13-35"></a>Alternatively, you would do something like this in <span class="in">`matlab`</span>.</span>
+<span id="cb13-38"><a href="#cb13-38"></a><span class="in">```{matlab}</span></span>
+<span id="cb13-39"><a href="#cb13-39"></a><span class="va">imagesc</span>(<span class="va">Z</span>)</span>
+<span id="cb13-40"><a href="#cb13-40"></a><span class="in">```</span></span>
+<span id="cb13-41"><a href="#cb13-41"></a></span>
+<span id="cb13-42"><a href="#cb13-42"></a>It makes sens to think of the matrix in the way that it is used by <span class="in">`matplotlib`</span> for plotting. A matrix is a two dimensional object that looks like this (when printing the first four columns in the first four rows).</span>
+<span id="cb13-45"><a href="#cb13-45"></a><span class="in">```{python}</span></span>
+<span id="cb13-46"><a href="#cb13-46"></a><span class="bu">print</span>(Z[:<span class="dv">4</span>, :<span class="dv">4</span>])</span>
+<span id="cb13-47"><a href="#cb13-47"></a><span class="in">```</span></span>
+<span id="cb13-48"><a href="#cb13-48"></a></span>
+<span id="cb13-49"><a href="#cb13-49"></a>To use <span class="in">`altair`</span>, we need to convert this matrix into a dataframe that looks slightly different.</span>
+<span id="cb13-50"><a href="#cb13-50"></a>Instead of storing the columns of the matrix as columns of the dataframe, we convert the matrix</span>
+<span id="cb13-51"><a href="#cb13-51"></a>into a *long* dataframe like this.</span>
+<span id="cb13-54"><a href="#cb13-54"></a><span class="in">```{python}</span></span>
+<span id="cb13-55"><a href="#cb13-55"></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb13-56"><a href="#cb13-56"></a>    {</span>
+<span id="cb13-57"><a href="#cb13-57"></a>        <span class="st">"y"</span>: Y.flatten(),</span>
+<span id="cb13-58"><a href="#cb13-58"></a>        <span class="st">"x"</span>: X.flatten(),</span>
+<span id="cb13-59"><a href="#cb13-59"></a>        <span class="st">"z"</span>: Z.flatten(),</span>
+<span id="cb13-60"><a href="#cb13-60"></a>    }</span>
+<span id="cb13-61"><a href="#cb13-61"></a>)</span>
+<span id="cb13-62"><a href="#cb13-62"></a><span class="in">```</span></span>
+<span id="cb13-63"><a href="#cb13-63"></a>Here are the first ten rows of the dataframe.</span>
+<span id="cb13-66"><a href="#cb13-66"></a><span class="in">```{python}</span></span>
+<span id="cb13-67"><a href="#cb13-67"></a>df.head(<span class="dv">10</span>)</span>
+<span id="cb13-68"><a href="#cb13-68"></a><span class="in">```</span></span>
+<span id="cb13-69"><a href="#cb13-69"></a>Now we can visualize the data using <span class="in">`altair`</span>. However, we need to compute <span class="in">`x2`</span> and <span class="in">`y2`</span> to tell <span class="in">`altair`</span> the extend of every rectangle. We can use <span class="in">`transform_calculate`</span> for that.</span>
+<span id="cb13-70"><a href="#cb13-70"></a></span>
+<span id="cb13-73"><a href="#cb13-73"></a><span class="in">```{python}</span></span>
+<span id="cb13-74"><a href="#cb13-74"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
+<span id="cb13-75"><a href="#cb13-75"></a>alt.Chart(df).mark_rect(clip<span class="op">=</span><span class="va">True</span>).encode(</span>
+<span id="cb13-76"><a href="#cb13-76"></a>    x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
+<span id="cb13-77"><a href="#cb13-77"></a>    x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
+<span id="cb13-78"><a href="#cb13-78"></a>    y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
+<span id="cb13-79"><a href="#cb13-79"></a>    y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
+<span id="cb13-80"><a href="#cb13-80"></a>    color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
+<span id="cb13-81"><a href="#cb13-81"></a>).transform_calculate(</span>
+<span id="cb13-82"><a href="#cb13-82"></a>    x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
+<span id="cb13-83"><a href="#cb13-83"></a>    y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
+<span id="cb13-84"><a href="#cb13-84"></a>)</span>
+<span id="cb13-85"><a href="#cb13-85"></a><span class="in">```</span></span>
+<span id="cb13-86"><a href="#cb13-86"></a></span>
+<span id="cb13-87"><a href="#cb13-87"></a>Now let's say that our data also had a time component.</span>
+<span id="cb13-90"><a href="#cb13-90"></a><span class="in">```{python}</span></span>
+<span id="cb13-91"><a href="#cb13-91"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
+<span id="cb13-92"><a href="#cb13-92"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span>
+<span id="cb13-93"><a href="#cb13-93"></a>X, Y, T <span class="op">=</span> np.meshgrid(x, x, t)</span>
+<span id="cb13-94"><a href="#cb13-94"></a>Z <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> X <span class="op">+</span> T) <span class="op">+</span> np.sqrt(Y)</span>
+<span id="cb13-95"><a href="#cb13-95"></a></span>
+<span id="cb13-96"><a href="#cb13-96"></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb13-97"><a href="#cb13-97"></a>    {</span>
+<span id="cb13-98"><a href="#cb13-98"></a>        <span class="st">"t"</span>: T.flatten(),</span>
+<span id="cb13-99"><a href="#cb13-99"></a>        <span class="st">"y"</span>: Y.flatten(),</span>
+<span id="cb13-100"><a href="#cb13-100"></a>        <span class="st">"x"</span>: X.flatten(),</span>
+<span id="cb13-101"><a href="#cb13-101"></a>        <span class="st">"z"</span>: Z.flatten(),</span>
+<span id="cb13-102"><a href="#cb13-102"></a>    }</span>
+<span id="cb13-103"><a href="#cb13-103"></a>)</span>
+<span id="cb13-104"><a href="#cb13-104"></a><span class="in">```</span></span>
+<span id="cb13-105"><a href="#cb13-105"></a></span>
+<span id="cb13-106"><a href="#cb13-106"></a>In addition to visualizing the heatmap, we can display the evolution of each cell over time.</span>
+<span id="cb13-107"><a href="#cb13-107"></a></span>
+<span id="cb13-110"><a href="#cb13-110"></a><span class="in">```{python}</span></span>
+<span id="cb13-111"><a href="#cb13-111"></a>selection <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
+<span id="cb13-112"><a href="#cb13-112"></a>delta <span class="op">=</span> x[<span class="dv">1</span>] <span class="op">-</span> x[<span class="dv">0</span>]</span>
+<span id="cb13-113"><a href="#cb13-113"></a>base <span class="op">=</span> (</span>
+<span id="cb13-114"><a href="#cb13-114"></a>    alt.Chart(df)</span>
+<span id="cb13-115"><a href="#cb13-115"></a>    .encode(opacity<span class="op">=</span>alt.condition(selection, alt.value(<span class="fl">1.0</span>), alt.value(<span class="fl">0.2</span>)))</span>
+<span id="cb13-116"><a href="#cb13-116"></a>    .add_params(selection)</span>
+<span id="cb13-117"><a href="#cb13-117"></a>)</span>
+<span id="cb13-118"><a href="#cb13-118"></a>heatmap <span class="op">=</span> (</span>
+<span id="cb13-119"><a href="#cb13-119"></a>    base.mark_rect(clip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-120"><a href="#cb13-120"></a>    .encode(</span>
+<span id="cb13-121"><a href="#cb13-121"></a>        x<span class="op">=</span>alt.X(<span class="st">"x"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"x"</span>),</span>
+<span id="cb13-122"><a href="#cb13-122"></a>        x2<span class="op">=</span>alt.X2(<span class="st">"x2"</span>),</span>
+<span id="cb13-123"><a href="#cb13-123"></a>        y<span class="op">=</span>alt.Y(<span class="st">"y"</span>, scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">5</span>)), title<span class="op">=</span><span class="st">"y"</span>),</span>
+<span id="cb13-124"><a href="#cb13-124"></a>        y2<span class="op">=</span>alt.Y2(<span class="st">"y2"</span>),</span>
+<span id="cb13-125"><a href="#cb13-125"></a>        color<span class="op">=</span>alt.Color(<span class="st">"z:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>)),</span>
+<span id="cb13-126"><a href="#cb13-126"></a>    )</span>
+<span id="cb13-127"><a href="#cb13-127"></a>    .transform_calculate(</span>
+<span id="cb13-128"><a href="#cb13-128"></a>        x2<span class="op">=</span>alt.datum.x <span class="op">+</span> delta,</span>
+<span id="cb13-129"><a href="#cb13-129"></a>        y2<span class="op">=</span>alt.datum.y <span class="op">+</span> delta,</span>
+<span id="cb13-130"><a href="#cb13-130"></a>    )</span>
+<span id="cb13-131"><a href="#cb13-131"></a>    .transform_filter(alt.datum.t <span class="op">==</span> t[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb13-132"><a href="#cb13-132"></a>)</span>
+<span id="cb13-133"><a href="#cb13-133"></a>linechart <span class="op">=</span> base.mark_line().encode(x<span class="op">=</span><span class="st">"t"</span>, y<span class="op">=</span><span class="st">"z"</span>, detail<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
+<span id="cb13-134"><a href="#cb13-134"></a></span>
+<span id="cb13-135"><a href="#cb13-135"></a>heatmap <span class="op">|</span> linechart</span>
+<span id="cb13-136"><a href="#cb13-136"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -23,8 +23,7 @@ Z = np.sin(2 * X) + np.sqrt(Y)
 
 I'd claim that this is the natural way of plotting a matrix for most mathematicians.
 ```{python}
-fig, ax = plt.subplots()
-ax.pcolormesh(X, Y, Z)
+plt.pcolormesh(X, Y, Z)
 ```
 
 Alternatively, you would do something like this in `matlab`.
