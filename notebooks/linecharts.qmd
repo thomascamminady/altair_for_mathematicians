@@ -73,6 +73,7 @@ encode(
 ```
 This states  what we are using as our plotting arguments.
 
+### Styling our plot
 A lot of customization is possible when us `altair`. Here's a modified version of the above plot.
 ```{python}
 alt.Chart(df).mark_line(strokeWidth=5, color="blue").encode(
