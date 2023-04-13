@@ -145,5 +145,12 @@
     "title": "Plotting 101",
     "section": "Plotting two functions",
     "text": "Plotting two functions\nLet’s go cracy and not just plot sin but also cos. In order to do so, we have to adapt our dataframe to represent this correctly:\n\nt = np.linspace(0, 20, 100)\ny = np.sin(t)\ny2 = np.cos(t)\ndf = pd.DataFrame(\n    {\n        \"t\": np.hstack([t, t]),\n        \"y\": np.hstack([y, y2]),\n        \"function\": [\"sin\"] * 100 + [\"cos\"] * 100,\n    }\n)\n\nThat is, we don’t change the fact that our columns are called t and y. We do however need a new identifier that tells us which entries belong together. Now the power of altair is that we can plot this in a very simple way.\n\nalt.themes.enable(\"default\")\n\nalt.Chart(df).mark_line().encode(\n    x=\"t\",\n    y=\"y\",\n    color=\"function\",\n)\n\n\n\n\n\n\nAll we have to do is specify an attribute that we want to color our plot by. If we don’t care about color, we can also just choose a detail.\n\nalt.Chart(df).mark_line().encode(\n    x=\"t\",\n    y=\"y\",\n    detail=\"function\",\n)\n\n\n\n\n\n\nOr we could have created a scatter plot with different shapes and colors.\n\nalt.Chart(df).mark_point(filled=True).encode(\n    x=\"t\",\n    y=\"y\",\n    shape=\"function\",\n    color=\"function\",\n)"
+  },
+  {
+    "objectID": "notebooks/linecharts.html#interactivity",
+    "href": "notebooks/linecharts.html#interactivity",
+    "title": "Plotting 101",
+    "section": "Interactivity",
+    "text": "Interactivity\nIt is easy to make our plot interactive. We can add a tooltip that displays information when hovering over points and make the plot zoomable by adding interactive() to it.\n\nalt.Chart(df).mark_point(filled=True).encode(\n    x=\"t\",\n    y=\"y\",\n    shape=\"function\",\n    color=\"function\",\n    tooltip=[\"t\", \"y\", \"function\"],\n).interactive()"
   }
 ]

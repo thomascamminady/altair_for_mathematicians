@@ -160,3 +160,16 @@ alt.Chart(df).mark_point(filled=True).encode(
     color="function",
 )
 ```
+
+## Interactivity
+It is easy to make our plot interactive. We can add a `tooltip` that displays information
+when hovering over points and make the plot zoomable by adding `interactive()` to it.
+```{python}
+alt.Chart(df).mark_point(filled=True).encode(
+    x="t",
+    y="y",
+    shape="function",
+    color="function",
+    tooltip=["t", "y", "function"],
+).interactive()
+```
