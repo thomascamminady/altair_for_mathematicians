@@ -1,77 +1,162 @@
 ---
-title: Plotting functions
+title: Plotting 101
 jupyter: python3
 execute:
-  enabled: true
+    enabled: true
 ---
 
-In this chapter, we will learn how to create beautiful and interactive visualizations of mathematical functions using Altair. As an example, we will plot three commonly used functions: sin(x) and cos(x). We will start by creating example data and plotting it with Matplotlib, and then transform the data into a dataframe and visualize it using Altair.
+We want to start simple and increase the complexity of our visualizations over time.
+While there a lot of things to learn about `altair`, an equally important learning exercise has to do with understanding the way data should be represented.
+We'll cover these topics as they occur. For now, let's start with a simple plot.
 
-## Creating Example Data
-
-Let's begin by generating our example data. We will create an array of x-values ranging from -2π to 2π and compute the corresponding y-values for each function.
+Before we get started, let's quickly cover one bit of code so that we don't need to worry about this again. We import the following packages at the start of every notebook.
 
 ```{python}
+import scipy
 import numpy as np
 import pandas as pd
-
-# Create an array of x-values
-x_values = np.linspace(-2 * np.pi, 2 * np.pi, 1000)
-
-# Compute y-values for each function
-y_sin = np.sin(x_values)
-y_cos = np.cos(x_values)
-```
-
-## Plotting with Matplotlib
-
-Now that we have our data, let's create a simple line plot for each function using Matplotlib.
-```{python}
+import altair as alt
 import matplotlib.pyplot as plt
 
-plt.plot(x_values, y_sin, label="sin(x)")
-plt.plot(x_values, y_cos, label="cos(x)")
+```
+But in order to save some space, we will always hide this code cell like this.
+```{python}
+# | code-fold: true
+# | code-summary: "Import packages."
+import scipy
+import numpy as np
+import pandas as pd
+import altair as alt
+import matplotlib.pyplot as plt
 
-plt.xlabel("x")
-plt.ylabel("y")
-plt.legend()
-plt.title("Functions: sin(x), cos(x)")
-plt.show()
 ```
 
-As you can see, Matplotlib allows us to quickly create line plots for our functions. However, these plots are static and do not provide the interactivity that can help us gain deeper insights into our data.
+## Plotting a simple function
 
-## Transforming Data into a Dataframe
-
-To create interactive visualizations with Altair, we first need to transform our data into a long-format dataframe. This means that we will have a single column for the x-values, a column for the y-values, and another column to indicate the function.
+With that being said, here's our first plot
 ```{python}
-data = pd.DataFrame(
+t = np.linspace(0, 20, 100)
+y = np.sin(t)
+df = pd.DataFrame(
     {
-        "x": np.tile(x_values, 2),
-        "y": np.concatenate([y_sin, y_cos]),
-        "function": np.repeat(["sin(x)", "cos(x)"], len(x_values)),
+        "t": t,
+        "y": y,
+    }
+)
+alt.Chart(df).mark_line().encode(
+    x="t",
+    y="y",
+)
+
+```
+This illustrates one step already: We always use `pandas` dataframes to plot our data and hence need to convert everything into the correct format. The plot itself the consists of three components
+```{python}
+# | eval: false
+alt.Chart(df)
+```
+states that we want to create a chart using the data stored in `df`.
+
+Next is the mark that we want to use for visualization
+```{python}
+# | eval: false
+mark_line()
+```
+implies that we are using a line chart. We could have also used `mark_point` or `mark_bar` to create scatter or bar charts, respectively.
+
+Last is the encoding of the data.
+```{python}
+# | eval: false
+encode(
+    x="t",
+    y="y",
+)
+```
+This states  what we are using as our plotting arguments.
+
+A lot of customization is possible when us `altair`. Here's a modified version of the above plot.
+```{python}
+alt.Chart(df).mark_line(strokeWidth=5, color="blue").encode(
+    x=alt.X("t:Q", scale=alt.Scale(domain=(-2, 22))),
+    y=alt.Y("y:Q", title="Some title"),
+).properties(
+    width=600,
+    height=200,
+    title="My altair plot.",
+).configure_axis(
+    labelFontSize=10,
+    titleFontSize=20,
+    titleFontWeight="normal",
+    labelAngle=45,
+    titleAngle=-45,
+    labelPadding=20,
+).configure_title(
+    fontSize=24,
+    fontWeight="normal",
+    color="blue",
+)
+
+```
+We see a lot of things come together here. First, `.properties()` allows us to specify
+properties of the plot such as width and height, but also the title.
+Adding the `strokeWidth` or `color` to the `mark_line` method specifies properties of the mark for the full plot.
+Using the syntax `x=alt.X(...)` is giving us more flexibility to specify properties than just writing `x="t"`.
+Note that we wrote `t:Q` instead of `t`. The `Q` specifies that we are using a quantitative variable instead of a
+nominal (`N`), ordinal (`O`), or temporal (`T`) variable. We don't need to specify this here because `altair` is able
+to infer that we are plotting a quantitative variable. The `scale` parameter allows us to specify arguments related to the scale of the plot. The label of the y-axis is specified by the `title` argument inside `alt.Y`. The `configure_axis` and `configure_title` methods allow us to specify arguments relevant to the axis and title, respectively.
+
+All of this is not pretty but gets the point across.
+
+You can also choose a pre-defined [theme](https://github.com/vega/vega-themes/).
+
+```{python}
+alt.themes.enable("fivethirtyeight")
+alt.Chart(df).mark_line().encode(
+    x=alt.X("t:Q", scale=alt.Scale(domain=(-2, 22))),
+    y=alt.Y("y:Q", title="Some title"),
+)
+```
+
+
+## Plotting two functions
+
+Let's go cracy and not just plot `sin` but also `cos`. In order to do so, we have to adapt our dataframe to represent this correctly:
+```{python}
+t = np.linspace(0, 20, 100)
+y = np.sin(t)
+y2 = np.cos(t)
+df = pd.DataFrame(
+    {
+        "t": np.hstack([t, t]),
+        "y": np.hstack([y, y2]),
+        "function": ["sin"] * 100 + ["cos"] * 100,
     }
 )
 ```
-
-## Interactive Visualizations with Altair
-
-Now that we have our data in the right format, let's create an interactive line chart using Altair.
-
+That is, we don't change the fact that our columns are called `t` and `y`. We do however need a new identifier that tells us which entries belong together. Now the power of `altair` is that we can plot this in a very simple way.
 ```{python}
-import altair as alt
+alt.themes.enable("default")
 
-# Create an interactive line chart
-chart = (
-    alt.Chart(data)
-    .mark_line()
-    .encode(x="x", y="y", color="function", tooltip=["function", "x", "y"])
-    .interactive()
-    .properties(title="Interactive Functions: sin(x), cos(x)")
+alt.Chart(df).mark_line().encode(
+    x="t",
+    y="y",
+    color="function",
 )
-
-chart
 ```
-The resulting chart is not only visually appealing but also allows you to interact with the data. You can hover over the lines to see the values of x and y for each function, and you can pan and zoom to focus on specific areas of the chart. This interactivity enables you to explore your data more thoroughly and gain new insights that might have been difficult to obtain with static plots.
-
-In this chapter, we have learned how to use Altair to create beautiful and interactive visualizations of mathematical functions. By transforming our data into a long-format dataframe and leveraging the power of Altair, we have unlocked a new level of understanding and exploration for our data.
+All we have to do is specify an attribute that we want to `color` our plot by.
+If we don't care about color, we can also just choose a `detail`.
+```{python}
+alt.Chart(df).mark_line().encode(
+    x="t",
+    y="y",
+    detail="function",
+)
+```
+Or we could have created a scatter plot with different shapes and colors.
+```{python}
+alt.Chart(df).mark_point(filled=True).encode(
+    x="t",
+    y="y",
+    shape="function",
+    color="function",
+)
+```
