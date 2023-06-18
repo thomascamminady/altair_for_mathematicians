@@ -30,11 +30,11 @@ repos:
       - id: black
         name: black (.py files)
 
-  - repo: https://github.com/kynan/nbstripout
-    rev: 0.6.1
-    hooks:
-      - id: nbstripout
-        name: nbstripout (.ipynb files)
+  # - repo: https://github.com/kynan/nbstripout
+  #   rev: 0.6.1
+  #   hooks:
+  #     - id: nbstripout
+  #       name: nbstripout (.ipynb files)
 
   - repo: https://github.com/nbQA-dev/nbQA
     rev: 1.6.3
